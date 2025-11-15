@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Pull{% endblock %}
+
+{% block body %}
+    <h1>Create new Pull</h1>
+
+    {{ include('pull/_form.html.twig') }}
+
+    <a href="{{ path('app_pull_index') }}">back to list</a>
+{% endblock %}

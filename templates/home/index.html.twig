@@ -3,9 +3,38 @@
 {% block title %}Bienvenue sur ... !{% endblock %}
 
 {% block body %}
-<style></style>
 
-<div class="example-wrapper">
-    <h1>Bienvenue {{ user.prenom }} !</h1>
+<h1 class="mb-4 text-center">Nos produits</h1>
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for product in products %}
+        <div class="col">
+            <div class="card h-100">
+
+                {# Affiche la première image du produit s'il y en a #}
+                {% set image = product.getImages()|first %}
+                {% if image %}
+                    <img src="{{ asset('uploads/' ~ image.url) }}" 
+                         class="card-img-top" 
+                         alt="{{ product.nom }}">
+                {% else %}
+                    <div class="card-img-top bg-light text-center" style="height:200px; line-height:200px;">
+                        Pas d'image
+                    </div>
+                {% endif %}
+
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ product.nom }}</h5>
+                    <p class="card-text text-muted">{{ product.description }}</p>
+                    <p class="fw-bold">{{ product.prix }} €</p>
+                </div>
+
+                <a href="{{ path('app_' ~ product.type ~ '_show', {'id': product.id}) }}" 
+                   class="stretched-link"></a>
+
+            </div>
+        </div>
+    {% endfor %}
 </div>
+
 {% endblock %}

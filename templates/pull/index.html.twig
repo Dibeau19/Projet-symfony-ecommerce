@@ -1,13 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PullController!{% endblock %}
+{% block title %}Pull index{% endblock %}
 
 {% block body %}
-<div>
-    <ul>
-    {% for element in pulls %}
-        <li><p>{{element.nom}}</p></li>
-    {% endfor %}
-    </ul>
-</div>
+    <h1>Pull index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Marque</th>
+                <th>Description</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Taille</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pull in pulls %}
+            <tr>
+                <td>{{ pull.id }}</td>
+                <td>{{ pull.nom }}</td>
+                <td>{{ pull.prix }}</td>
+                <td>{{ pull.marque }}</td>
+                <td>{{ pull.description }}</td>
+                <td>{{ pull.stock }}</td>
+                <td>{{ pull.Status }}</td>
+                <td>{{ pull.taille }}</td>
+                <td>
+                    <a href="{{ path('app_pull_show', {'id': pull.id}) }}">show</a>
+                    <a href="{{ path('app_pull_edit', {'id': pull.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pull_new') }}">Create new</a>
 {% endblock %}

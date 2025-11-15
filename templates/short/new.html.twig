@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Short{% endblock %}
+
+{% block body %}
+    <h1>Create new Short</h1>
+
+    {{ include('short/_form.html.twig') }}
+
+    <a href="{{ path('app_short_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Short{% endblock %}
+
+{% block body %}
+    <h1>Short</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ short.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ short.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ short.prix }}</td>
+            </tr>
+            <tr>
+                <th>Marque</th>
+                <td>{{ short.marque }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ short.description }}</td>
+            </tr>
+            <tr>
+                <th>Stock</th>
+                <td>{{ short.stock }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ short.Status }}</td>
+            </tr>
+            <tr>
+                <th>Taille</th>
+                <td>{{ short.taille }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_short_index') }}">back to list</a>
+
+    <a href="{{ path('app_short_edit', {'id': short.id}) }}">edit</a>
+
+    {{ include('short/_delete_form.html.twig') }}
+{% endblock %}

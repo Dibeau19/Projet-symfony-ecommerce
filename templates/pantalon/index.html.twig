@@ -1,13 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Voici la liste des pantalons{% endblock %}
+{% block title %}Pantalon index{% endblock %}
 
-{% block content %}
-<div>
-    <ul>
-    {% for element in pantalons %}
-        <li><p>{{element.nom}}</p></li>
-    {% endfor %}
-    </ul>
-</div>
+{% block body %}
+{% if is_granted('ROLE_ADMIN') %}
+    <h1>Pantalon index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Marque</th>
+                <th>Description</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Taille</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th>actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for pantalon in pantalons %}
+            <tr>
+                <td>{{ pantalon.id }}</td>
+                <td>{{ pantalon.nom }}</td>
+                <td>{{ pantalon.prix }}</td>
+                <td>{{ pantalon.marque }}</td>
+                <td>{{ pantalon.description }}</td>
+                <td>{{ pantalon.stock }}</td>
+                <td>{{ pantalon.status.name  }}</td>
+                <td>{{ pantalon.taille }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>
+                        <a href="{{ path('app_pantalon_show', {'id': pantalon.id}) }}">show</a>
+                        <a href="{{ path('app_pantalon_edit', {'id': pantalon.id}) }}">edit</a>
+                    </td>
+                {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pantalon_new') }}">Create new</a>
+{% else %}
+
+    <h1>Vous n'avez pas la permission d'accéder à cette page.</h1>
+{% endif %}
 {% endblock %}

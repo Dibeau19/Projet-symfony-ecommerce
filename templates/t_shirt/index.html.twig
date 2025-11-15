@@ -1,13 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TShirtController!{% endblock %}
+{% block title %}TShirt index{% endblock %}
 
 {% block body %}
-<div>
-    <ul>
-    {% for element in tshirts %}
-        <li><p>{{element.nom}}</p></li>
-    {% endfor %}
-    </ul>
-</div>
+    <h1>TShirt index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Marque</th>
+                <th>Description</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Taille</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for t_shirt in t_shirts %}
+            <tr>
+                <td>{{ t_shirt.id }}</td>
+                <td>{{ t_shirt.nom }}</td>
+                <td>{{ t_shirt.prix }}</td>
+                <td>{{ t_shirt.marque }}</td>
+                <td>{{ t_shirt.description }}</td>
+                <td>{{ t_shirt.stock }}</td>
+                <td>{{ t_shirt.Status }}</td>
+                <td>{{ t_shirt.taille }}</td>
+                <td>
+                    <a href="{{ path('app_t_shirt_show', {'id': t_shirt.id}) }}">show</a>
+                    <a href="{{ path('app_t_shirt_edit', {'id': t_shirt.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_t_shirt_new') }}">Create new</a>
 {% endblock %}

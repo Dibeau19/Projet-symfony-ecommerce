@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use App\Enum\Status;
 use App\Repository\ProduitRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
-
-#[ORM\InheritanceType('JOINED')] 
+#[ORM\InheritanceType('JOINED')]
 #[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
 #[ORM\DiscriminatorMap([
     'produit' => Produit::class,
@@ -32,6 +34,25 @@ class Produit
     #[ORM\Column(length: 255)]
     private ?string $marque = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\Column]
+    private ?int $stock = null;
+
+    #[ORM\Column(enumType: Status::class)]
+    private ?Status $status = null;
+
+    // ===== RELATION AVEC IMAGE =====
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Image::class, cascade: ['persist', 'remove'])]
+    private Collection $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
+
+    // ===== GETTERS / SETTERS EXISTANTS =====
     public function getId(): ?int
     {
         return $this->id;
@@ -45,7 +66,6 @@ class Produit
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -57,7 +77,6 @@ class Produit
     public function setPrix(float $prix): static
     {
         $this->prix = $prix;
-
         return $this;
     }
 
@@ -69,7 +88,74 @@ class Produit
     public function setMarque(string $marque): static
     {
         $this->marque = $marque;
-
         return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+    public function setStock(int $stock): static
+    {
+        $this->stock = $stock;
+        return $this;
+    }
+
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(Status $status): static
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): static
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setProduit($this);
+        }
+        return $this;
+    }
+
+    public function removeImage(Image $image): static
+    {
+        if ($this->images->removeElement($image)) {
+            if ($image->getProduit() === $this) {
+                $image->setProduit(null);
+            }
+        }
+        return $this;
+    }
+
+    public function getType(): string
+    {
+        return match(true) {
+            $this instanceof Pull => 'pull',
+            $this instanceof TShirt => 'tshirt',
+            $this instanceof Pantalon => 'pantalon',
+            $this instanceof Short => 'short',
+            default => 'produit',
+        };
     }
 }

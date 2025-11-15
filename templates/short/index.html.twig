@@ -1,13 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ShortController!{% endblock %}
+{% block title %}Short index{% endblock %}
 
 {% block body %}
-<div>
-    <ul>
-    {% for element in shorts %}
-        <li><p>{{element.nom}}</p></li>
-    {% endfor %}
-    </ul>
-</div>
+    <h1>Short index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Marque</th>
+                <th>Description</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Taille</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for short in shorts %}
+            <tr>
+                <td>{{ short.id }}</td>
+                <td>{{ short.nom }}</td>
+                <td>{{ short.prix }}</td>
+                <td>{{ short.marque }}</td>
+                <td>{{ short.description }}</td>
+                <td>{{ short.stock }}</td>
+                <td>{{ short.Status }}</td>
+                <td>{{ short.taille }}</td>
+                <td>
+                    <a href="{{ path('app_short_show', {'id': short.id}) }}">show</a>
+                    <a href="{{ path('app_short_edit', {'id': short.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_short_new') }}">Create new</a>
 {% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TShirt{% endblock %}
+
+{% block body %}
+    <h1>TShirt</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ t_shirt.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ t_shirt.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ t_shirt.prix }}</td>
+            </tr>
+            <tr>
+                <th>Marque</th>
+                <td>{{ t_shirt.marque }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ t_shirt.description }}</td>
+            </tr>
+            <tr>
+                <th>Stock</th>
+                <td>{{ t_shirt.stock }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ t_shirt.Status }}</td>
+            </tr>
+            <tr>
+                <th>Taille</th>
+                <td>{{ t_shirt.taille }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_t_shirt_index') }}">back to list</a>
+
+    <a href="{{ path('app_t_shirt_edit', {'id': t_shirt.id}) }}">edit</a>
+
+    {{ include('t_shirt/_delete_form.html.twig') }}
+{% endblock %}

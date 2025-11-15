@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Pantalon{% endblock %}
+
+{% block body %}
+{% if is_granted('ROLE_ADMIN') %}
+    <h1>Edit Pantalon</h1>
+
+    {{ include('pantalon/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_pantalon_index') }}">back to list</a>
+
+    {{ include('pantalon/_delete_form.html.twig') }}
+{% else %}
+    <h1>Vous n'avez pas la permission d'accéder à cette page.</h1>
+{% endif %}
+{% endblock %}
