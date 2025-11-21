@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Image; 
 use App\Entity\Pull;
 use App\Form\Pull1Type;
 use App\Repository\PullRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile; 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -26,11 +28,40 @@ final class PullController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
         $pull = new Pull();
         $form = $this->createForm(Pull1Type::class, $pull);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $imageFiles = $form->get('images')->getData();
+
+            if ($imageFiles && !is_array($imageFiles)) {
+                $imageFiles = [$imageFiles];
+            }
+
+            if ($imageFiles) {
+                foreach ($imageFiles as $imageFile) {
+                    if (!$imageFile instanceof UploadedFile) {
+                        continue;
+                    }
+
+                    $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                    $imageFile->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+
+                    $image = new Image();
+                    $image->setUrl($newFilename);
+                    
+                    $pull->addImage($image);
+                    $entityManager->persist($image);
+                }
+            }
+
             $entityManager->persist($pull);
             $entityManager->flush();
 
@@ -46,8 +77,8 @@ final class PullController extends AbstractController
     #[Route('/{id}', name: 'app_pull_show', methods: ['GET'])]
     public function show(Pull $pull): Response
     {
-        return $this->render('pull/show.html.twig', [
-            'pull' => $pull,
+        return $this->render('produit/show.html.twig', [
+            'produit' => $pull,
         ]);
     }
 
@@ -55,10 +86,39 @@ final class PullController extends AbstractController
     public function edit(Request $request, Pull $pull, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
         $form = $this->createForm(Pull1Type::class, $pull);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $imageFiles = $form->get('images')->getData();
+
+            if ($imageFiles && !is_array($imageFiles)) {
+                $imageFiles = [$imageFiles];
+            }
+
+            if ($imageFiles) {
+                foreach ($imageFiles as $imageFile) {
+                    if (!$imageFile instanceof UploadedFile) {
+                        continue;
+                    }
+
+                    $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                    $imageFile->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+
+                    $image = new Image();
+                    $image->setUrl($newFilename);
+                    
+                    $pull->addImage($image);
+                    $entityManager->persist($image);
+                }
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_pull_index', [], Response::HTTP_SEE_OTHER);
@@ -74,6 +134,7 @@ final class PullController extends AbstractController
     public function delete(Request $request, Pull $pull, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
         if ($this->isCsrfTokenValid('delete'.$pull->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($pull);
             $entityManager->flush();

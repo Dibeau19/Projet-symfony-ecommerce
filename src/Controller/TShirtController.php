@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Image; 
 use App\Entity\TShirt;
 use App\Form\TShirt1Type;
 use App\Repository\TShirtRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile; 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -26,11 +28,41 @@ final class TShirtController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
         $tShirt = new TShirt();
         $form = $this->createForm(TShirt1Type::class, $tShirt);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $imageFiles = $form->get('images')->getData();
+
+            if ($imageFiles && !is_array($imageFiles)) {
+                $imageFiles = [$imageFiles];
+            }
+
+            if ($imageFiles) {
+                foreach ($imageFiles as $imageFile) {
+                    if (!$imageFile instanceof UploadedFile) {
+                        continue;
+                    }
+
+                    $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                    $imageFile->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+
+                    $image = new Image();
+                    $image->setUrl($newFilename);
+                    
+                    $tShirt->addImage($image);
+                    
+                    $entityManager->persist($image);
+                }
+            }
+
             $entityManager->persist($tShirt);
             $entityManager->flush();
 
@@ -46,8 +78,8 @@ final class TShirtController extends AbstractController
     #[Route('/{id}', name: 'app_t_shirt_show', methods: ['GET'])]
     public function show(TShirt $tShirt): Response
     {
-        return $this->render('t_shirt/show.html.twig', [
-            't_shirt' => $tShirt,
+        return $this->render('produit/show.html.twig', [
+            'produit' => $tShirt,
         ]);
     }
 
@@ -55,10 +87,39 @@ final class TShirtController extends AbstractController
     public function edit(Request $request, TShirt $tShirt, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
         $form = $this->createForm(TShirt1Type::class, $tShirt);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $imageFiles = $form->get('images')->getData();
+
+            if ($imageFiles && !is_array($imageFiles)) {
+                $imageFiles = [$imageFiles];
+            }
+
+            if ($imageFiles) {
+                foreach ($imageFiles as $imageFile) {
+                    if (!$imageFile instanceof UploadedFile) {
+                        continue;
+                    }
+
+                    $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                    $imageFile->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+
+                    $image = new Image();
+                    $image->setUrl($newFilename);
+                    
+                    $tShirt->addImage($image);
+                    $entityManager->persist($image);
+                }
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_t_shirt_index', [], Response::HTTP_SEE_OTHER);
@@ -74,6 +135,7 @@ final class TShirtController extends AbstractController
     public function delete(Request $request, TShirt $tShirt, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
         if ($this->isCsrfTokenValid('delete'.$tShirt->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($tShirt);
             $entityManager->flush();

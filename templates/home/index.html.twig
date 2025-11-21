@@ -11,7 +11,6 @@
         <div class="col">
             <div class="card h-100">
 
-                {# Affiche la première image du produit s'il y en a #}
                 {% set image = product.getImages()|first %}
                 {% if image %}
                     <img src="{{ asset('uploads/' ~ image.url) }}" 

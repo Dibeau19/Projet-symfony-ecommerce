@@ -3,9 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Short;
+use App\Enum\Status;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class Short1Type extends AbstractType
 {
@@ -16,9 +19,19 @@ class Short1Type extends AbstractType
             ->add('prix')
             ->add('marque')
             ->add('description')
-            ->add('stock')
-            ->add('Status')
             ->add('taille')
+            ->add('stock')
+            ->add('status', ChoiceType::class, [
+                'choices' => Status::cases(),
+                'choice_label' => fn(Status $status) => $status->name,
+                'choice_value' => fn(?Status $status) => $status?->value,
+            ])
+            ->add('images', FileType::class, [
+                'label' => 'Image',
+                'mapped' => false, 
+                'required' => false,
+                'multiple' => true
+            ]);
         ;
     }
 
