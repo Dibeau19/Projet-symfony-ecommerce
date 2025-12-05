@@ -24,6 +24,14 @@ final class ShortController extends AbstractController
         ]);
     }
 
+    #[Route('/admin', name: 'app_short_admin', methods: ['GET'])]
+    public function admin(ShortRepository $shortRepository): Response
+    {
+        return $this->render('short/adminIndex.html.twig', [
+            'shorts' => $shortRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_short_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

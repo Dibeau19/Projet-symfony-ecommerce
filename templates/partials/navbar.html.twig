@@ -4,38 +4,55 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <select class="dropdown">
+                <option>
+                    <a class="dropdown-item {% if app.request.locale == 'fr' %}active{% endif %}" 
+                    href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': 'fr'})) }}">
+                    Français
+                    </a>
+                </option>
+                <option>
+                    <a class="dropdown-item {% if app.request.locale == 'en' %}active{% endif %}" 
+                    href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': 'en'})) }}">
+                    English
+                    </a>
+                </option>
+    
+        </select>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_pull_index') }}">Pulls</a>
+                    <a class="nav-link" href="{{ path('app_pull_index') }}">{% trans %} pulls {% endtrans %}</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_t_shirt_index') }}">T-Shirt</a>
+                    <a class="nav-link" href="{{ path('app_t_shirt_index') }}">{% trans %} tshirts {% endtrans %}</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_pantalon_index') }}">Pantalons</a>
+                    <a class="nav-link" href="{{ path('app_pantalon_index') }}">{% trans %} pantalons {% endtrans %}</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_short_index') }}">Shorts</a>
+                    <a class="nav-link" href="{{ path('app_short_index') }}">{% trans %} shorts {% endtrans %}</a>
                 </li>
 
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
-                        {# <a class="nav-link" href="{{ path('admin_dashboard') }}">Admin</a> #}
+                        <a class="nav-link" href="{{ path('app_adminPage_index') }}">Admin</a> 
                     </li>
                 {% endif %}
 
+                
+
                 {% if app.user %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                        <a class="nav-link" href="{{ path('app_logout') }}">{% trans %}deconnexion{% endtrans %}</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                        <a class="nav-link" href="{{ path('app_login') }}">{% trans %}connexion{% endtrans %}</a>
                     </li>
                 {% endif %}
             </ul>

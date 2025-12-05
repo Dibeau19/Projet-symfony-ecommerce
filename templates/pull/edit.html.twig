@@ -3,6 +3,7 @@
 {% block title %}Edit Pull{% endblock %}
 
 {% block body %}
+{% if is_granted('ROLE_ADMIN') %}
     <h1>Edit Pull</h1>
 
     {{ include('pull/_form.html.twig', {'button_label': 'Update'}) }}
@@ -10,4 +11,7 @@
     <a href="{{ path('app_pull_index') }}">back to list</a>
 
     {{ include('pull/_delete_form.html.twig') }}
+{% else %}
+    <h1>Vous n'avez pas la permission d'accéder à cette page.</h1>
+{% endif %}
 {% endblock %}

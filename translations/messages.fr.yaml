@@ -1,0 +1,28 @@
+pulls : Pulls
+tshirts : T-shirts
+pantalons : Pantalons
+shorts : Shorts
+connexion: Connexion
+deconnexion: Déconnexion
+
+nosProduits : Nos produits
+nosPulls : Nos pulls
+nosTShirts : Nos t-shirts
+nosPantalons : Nos pantalons
+nosShorts : Nos Shorts
+
+produit : Produit
+ruptureStock : Rupture de stock
+ajouterPanier : Ajouter au panier
+reference : Référence
+piece : Pièces
+pasImage : Pas d'image disponible
+
+identifierVous : Veuillez vous identifier
+seConnecter : Se connecter
+creerCompte : Créer un compte
+motDePasse : Mot de passe
+
+nom : Nom
+prenom : Prénom
+accepterConditions : Accepter les conditions générales

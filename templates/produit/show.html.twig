@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produit - {{ produit.nom }}{% endblock %}
+{% block title %}{% trans %} produit {% endtrans %} - {{ produit.nom }}{% endblock %}
 
 {% block body %}
 <div class="container mt-4 mb-5">
@@ -19,7 +19,7 @@
                 {% endfor %}
             {% else %}
                 <div class="d-flex align-items-center justify-content-center bg-light rounded shadow-sm" style="height: 500px;">
-                    <span class="text-muted fs-4">Pas d'image</span>
+                    <span class="text-muted fs-4">{% trans %} pasImage {% endtrans %}</span>
                 </div>
             {% endif %}
         </div>
@@ -42,21 +42,21 @@
 
                     <div class="d-grid gap-2 mb-3">
                          {% if produit.stock > 0 %}
-                            <button class="btn btn-success btn-lg">Ajouter au panier</button>
+                            <button class="btn btn-success btn-lg">{% trans %} ajouterPanier {% endtrans %}</button>
                          {% else %}
-                            <button class="btn btn-secondary btn-lg" disabled>Rupture de stock</button>
+                            <button class="btn btn-secondary btn-lg" disabled>{% trans %} ruptureStock {% endtrans %}</button>
                          {% endif %}
                     </div>
 
                     <ul class="list-group list-group-flush small mt-4">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Référence
+                            {% trans %} reference {% endtrans %}
                             <span class="badge bg-secondary rounded-pill">{{ produit.id }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Stock
                             <span class="fw-bold {{ produit.stock > 0 ? 'text-success' : 'text-danger' }}">
-                                {{ produit.stock }} pièces
+                                {{ produit.stock }} {% trans %} piece {% endtrans %}
                             </span>
                         </li>
                     </ul>

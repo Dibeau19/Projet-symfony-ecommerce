@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<h1 class="mb-4 text-center">Nos produits</h1>
+<h1 class="mb-4 text-center">{% trans %} nosProduits {% endtrans %}</h1>
 
 <div class="row row-cols-1 row-cols-md-4 g-4">
     {% for product in products %}
@@ -18,7 +18,7 @@
                          alt="{{ product.nom }}">
                 {% else %}
                     <div class="card-img-top bg-light text-center" style="height:200px; line-height:200px;">
-                        Pas d'image
+                        {% trans %} pasImage {% endtrans %}
                     </div>
                 {% endif %}
 

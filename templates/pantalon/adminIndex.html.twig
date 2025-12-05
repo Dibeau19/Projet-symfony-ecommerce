@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pantalon index{% endblock %}
+
+{% block body %}
+
+
+{% if is_granted('ROLE_ADMIN') %}
+    <h1 class='text-center'>Pantalon index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Marque</th>
+                <th>Description</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Taille</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th>actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for pantalon in pantalons %}
+            <tr>
+                <td>{{ pantalon.id }}</td>
+                <td>{{ pantalon.nom }}</td>
+                <td>{{ pantalon.prix }}</td>
+                <td>{{ pantalon.marque }}</td>
+                <td>{{ pantalon.description }}</td>
+                <td>{{ pantalon.stock }}</td>
+                <td>{{ pantalon.status.name  }}</td>
+                <td>{{ pantalon.taille }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>
+                        <a href="{{ path('app_pantalon_show', {'id': pantalon.id}) }}">show</a>
+                        <a href="{{ path('app_pantalon_edit', {'id': pantalon.id}) }}">edit</a>
+                    </td>
+                {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pantalon_new') }}">Create new</a>
+{% endif %}
+{% endblock %}

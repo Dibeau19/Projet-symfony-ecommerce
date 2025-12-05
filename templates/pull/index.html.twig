@@ -3,51 +3,7 @@
 {% block title %}Pull index{% endblock %}
 
 {% block body %}
-
-{% if is_granted('ROLE_ADMIN') %}
-    <h1 class='text-center'>Pull index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Prix</th>
-                <th>Marque</th>
-                <th>Description</th>
-                <th>Stock</th>
-                <th>Status</th>
-                <th>Taille</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for pull in pulls %}
-            <tr>
-                <td>{{ pull.id }}</td>
-                <td>{{ pull.nom }}</td>
-                <td>{{ pull.prix }}</td>
-                <td>{{ pull.marque }}</td>
-                <td>{{ pull.description }}</td>
-                <td>{{ pull.stock }}</td>
-                <td>{{ pull.status.value }}</td>
-                <td>{{ pull.taille }}</td>
-                <td>
-                    <a href="{{ path('app_pull_show', {'id': pull.id}) }}">show</a>
-                    <a href="{{ path('app_pull_edit', {'id': pull.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_pull_new') }}">Create new</a>
-{% endif %}
-    <h1 class="mb-4 text-center">Nos pulls</h1>
+    <h1 class="mb-4 text-center">{% trans %} nosPulls {% endtrans %}</h1>
 <div class="row row-cols-1 row-cols-md-4 g-4">
     {% for pull in pulls %}
             <div class="col">
@@ -60,7 +16,7 @@
                             alt="{{ pull.nom }}">
                     {% else %}
                         <div class="card-img-top bg-light text-center" style="height:200px; line-height:200px;">
-                            Pas d'image
+                            {% trans %} pasImage {% endtrans %}
                         </div>
                     {% endif %}
 

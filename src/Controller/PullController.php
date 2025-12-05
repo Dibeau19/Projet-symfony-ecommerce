@@ -24,6 +24,14 @@ final class PullController extends AbstractController
         ]);
     }
 
+    #[Route('/admin', name: 'app_pull_admin', methods: ['GET'])]
+    public function admin(PullRepository $pullRepository): Response
+    {
+        return $this->render('pull/adminIndex.html.twig', [
+            'pulls' => $pullRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_pull_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

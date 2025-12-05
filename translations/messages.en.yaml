@@ -1,0 +1,28 @@
+pulls : Sweaters
+tshirts : T-shirts
+pantalons : Pants
+shorts : Shorts
+connexion: Login
+deconnexion: Logout
+
+nosProduits : Our Products
+nosPulls : Our Sweaters
+nosTShirts : Our T-shirts
+nosPantalons : Our Pants
+nosShorts : Our Shorts
+
+produit : Product
+ruptureStock : Out of Stock
+ajouterPanier : Add to Cart
+reference : Reference
+piece : Pieces
+pasImage : No image available
+
+identifierVous : Please log in
+seConnecter : Log in
+creerCompte : Create an account
+motDePasse : Password
+
+nom : Name
+prenom : First Name
+accepterConditions : Accept Terms and Conditions

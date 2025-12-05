@@ -24,6 +24,14 @@ final class TShirtController extends AbstractController
         ]);
     }
 
+    #[Route('/admin', name: 'app_t_shirt_admin', methods: ['GET'])]
+    public function admin(TShirtRepository $tShirtRepository): Response
+    {
+        return $this->render('t_shirt/adminIndex.html.twig', [
+            't_shirts' => $tShirtRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_t_shirt_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

@@ -2,51 +2,8 @@
 
 {% block title %}TShirt index{% endblock %}
 
-{% block body %}
-{% if is_granted('ROLE_ADMIN') %}
-    <h1 class='text-center'>TShirt index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Prix</th>
-                <th>Marque</th>
-                <th>Description</th>
-                <th>Stock</th>
-                <th>Status</th>
-                <th>Taille</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for t_shirt in t_shirts %}
-            <tr>
-                <td>{{ t_shirt.id }}</td>
-                <td>{{ t_shirt.nom }}</td>
-                <td>{{ t_shirt.prix }}</td>
-                <td>{{ t_shirt.marque }}</td>
-                <td>{{ t_shirt.description }}</td>
-                <td>{{ t_shirt.stock }}</td>
-                <td>{{ t_shirt.Status }}</td>
-                <td>{{ t_shirt.taille }}</td>
-                <td>
-                    <a href="{{ path('app_t_shirt_show', {'id': t_shirt.id}) }}">show</a>
-                    <a href="{{ path('app_t_shirt_edit', {'id': t_shirt.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_t_shirt_new') }}">Create new</a>
-{% endif %} 
-    <h1 class="mb-4 text-center">Nos t-shirts</h1>
+{% block body %} 
+    <h1 class="mb-4 text-center">{% trans %} nosTShirts {% endtrans %}</h1>
 
 <div class="row row-cols-1 row-cols-md-4 g-4">
     {% for t_shirt in t_shirts %}
@@ -60,7 +17,7 @@
                             alt="{{ t_shirt.nom }}">
                     {% else %}
                         <div class="card-img-top bg-light text-center" style="height:200px; line-height:200px;">
-                            Pas d'image
+                            {% trans %} pasImage {% endtrans %}
                         </div>
                     {% endif %}
 

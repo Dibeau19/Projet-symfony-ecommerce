@@ -25,6 +25,14 @@ final class PantalonController extends AbstractController
         ]);
     }
 
+    #[Route('/admin', name: 'app_pantalon_admin', methods: ['GET'])]
+    public function admin(PantalonRepository $pantalonRepository): Response
+    {
+        return $this->render('pantalon/adminIndex.html.twig', [
+            'pantalons' => $pantalonRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_pantalon_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
 {

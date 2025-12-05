@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page gestion des produits{% endblock %}
+
+{% block body %}
+
+<h1>Page gestion des produits</h1>
+
+{% if is_granted('ROLE_ADMIN') %}
+    <ul>
+        <li><a href="{{ path('app_pull_admin') }}">Gérer les Pulls</a></li>
+        <li><a href="{{ path('app_t_shirt_admin') }}">Gérer les T-Shirts</a></li>
+        <li><a href="{{ path('app_pantalon_admin') }}">Gérer les Pantalons</a></li>
+        <li><a href="{{ path('app_short_admin') }}">Gérer les Shorts</a></li>
+    </ul>
+{% else %}
+    <h2>Vous n'avez pas la permission d'accéder à cette page.</h2>
+{% endif %}
+
+{% endblock %}

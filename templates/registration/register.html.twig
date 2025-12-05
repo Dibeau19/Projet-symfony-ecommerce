@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}{% trans %} seConnecter {% endtrans %}{% endblock %}
 
 {% block body %}
     <h1>Register</h1>
@@ -16,6 +16,6 @@
         }) }}
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn btn-primary">Se connecter</button>
+        <button type="submit" class="btn btn-primary">{% trans %} creerCompte {% endtrans %}</button>
     {{ form_end(registrationForm) }}
 {% endblock %}
