@@ -9,7 +9,7 @@
 <div class="row row-cols-1 row-cols-md-4 g-4">
     {% for product in products %}
         <div class="col">
-            <div class="card h-100">
+            <div class="card h-100 shadow-sm card-hover">
 
                 {% set image = product.getImages()|first %}
                 {% if image %}

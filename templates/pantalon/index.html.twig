@@ -4,7 +4,7 @@
 
 {% block body %}
 {% if is_granted('ROLE_ADMIN') %}
-    <h1>Pantalon index</h1>
+    <h1 class='text-center'>Pantalon index</h1>
 
     <table class="table">
         <thead>
@@ -50,8 +50,37 @@
     </table>
 
     <a href="{{ path('app_pantalon_new') }}">Create new</a>
-{% else %}
-
-    <h1>Vous n'avez pas la permission d'accéder à cette page.</h1>
 {% endif %}
+
+<h1 class="mb-4 text-center">Nos pantalons</h1>
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for pantalon in pantalons %}
+            <div class="col">
+                <div class="card h-100 shadow-sm card-hover">
+
+                    {% set image = pantalon.getImages()|first %}
+                    {% if image %}
+                        <img src="{{ asset('uploads/' ~ image.url) }}" 
+                            class="card-img-top" 
+                            alt="{{ pantalon.nom }}">
+                    {% else %}
+                        <div class="card-img-top bg-light text-center" style="height:200px; line-height:200px;">
+                            Pas d'image
+                        </div>
+                    {% endif %}
+
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ pantalon.nom }}</h5>
+                        <p class="card-text text-muted">{{ pantalon.description }}</p>
+                        <p class="fw-bold">{{ pantalon.prix }} €</p>
+                    </div>
+
+                    <a href="{{ path('app_' ~ pantalon.type ~ '_show', {'id': pantalon.id}) }}" 
+                    class="stretched-link"></a>
+
+                </div>
+            </div>
+    {% endfor %}
+</div>
 {% endblock %}

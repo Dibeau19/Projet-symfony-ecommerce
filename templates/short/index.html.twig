@@ -3,7 +3,8 @@
 {% block title %}Short index{% endblock %}
 
 {% block body %}
-    <h1>Short index</h1>
+{% if is_granted('ROLE_ADMIN') %}
+    <h1 class='text-center'>Short index</h1>
 
     <table class="table">
         <thead>
@@ -44,4 +45,36 @@
     </table>
 
     <a href="{{ path('app_short_new') }}">Create new</a>
+{% endif %}
+    <h1 class="mb-4 text-center">Nos shorts</h1>
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for short in shorts %}
+            <div class="col">
+                <div class="card h-100 shadow-sm card-hover">
+
+                    {% set image = short.getImages()|first %}
+                    {% if image %}
+                        <img src="{{ asset('uploads/' ~ image.url) }}" 
+                            class="card-img-top" 
+                            alt="{{ short.nom }}">
+                    {% else %}
+                        <div class="card-img-top bg-light text-center" style="height:200px; line-height:200px;">
+                            Pas d'image
+                        </div>
+                    {% endif %}
+
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ short.nom }}</h5>
+                        <p class="card-text text-muted">{{ short.description }}</p>
+                        <p class="fw-bold">{{ short.prix }} €</p>
+                    </div>
+
+                    <a href="{{ path('app_' ~ short.type ~ '_show', {'id': short.id}) }}" 
+                    class="stretched-link"></a>
+
+                </div>
+            </div>
+    {% endfor %}
+</div>
 {% endblock %}

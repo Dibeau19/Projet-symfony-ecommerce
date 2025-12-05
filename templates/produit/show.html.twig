@@ -1,41 +1,69 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produit{% endblock %}
+{% block title %}Produit - {{ produit.nom }}{% endblock %}
 
 {% block body %}
-    <h1>Produit</h1>
+<div class="container mt-4 mb-5">
+    <div class="row">
+        
+        <div class="col-lg-8">
+            {% set images = produit.images %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ produit.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ produit.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prix</th>
-                <td>{{ produit.prix }}</td>
-            </tr>
-            <tr>
-                <th>Marque</th>
-                <td>{{ produit.marque }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ produit.description }}</td>
-            </tr>
-            <tr>
-                <th>Stock</th>
-                <td>{{ produit.stock }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ produit.status.value }}</td>
-            </tr>
-        </tbody>
-    </table>
+            {% if images is not empty %}
+                {% for image in images %}
+                    <div class="mb-4"> 
+                        <img src="{{ asset('uploads/' ~ image.url) }}" 
+                             class="img-fluid w-100 rounded shadow-sm" 
+                             alt="{{ produit.nom }}">
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="d-flex align-items-center justify-content-center bg-light rounded shadow-sm" style="height: 500px;">
+                    <span class="text-muted fs-4">Pas d'image</span>
+                </div>
+            {% endif %}
+        </div>
 
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm p-3" style="position: sticky; top: 2rem; z-index: 10;">
+                <div class="card-body">
+                    <h5 class="text-muted text-uppercase">{{ produit.marque }}</h5>
+                    <h1 class="h2 fw-bold">{{ produit.nom }}</h1>
+                    
+                    <div class="h3 text-primary my-3">
+                        {{ produit.prix }} €
+                    </div>
+
+                    <p class="card-text text-muted">
+                        {{ produit.description }}
+                    </p>
+
+                    <hr>
+
+                    <div class="d-grid gap-2 mb-3">
+                         {% if produit.stock > 0 %}
+                            <button class="btn btn-success btn-lg">Ajouter au panier</button>
+                         {% else %}
+                            <button class="btn btn-secondary btn-lg" disabled>Rupture de stock</button>
+                         {% endif %}
+                    </div>
+
+                    <ul class="list-group list-group-flush small mt-4">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Référence
+                            <span class="badge bg-secondary rounded-pill">{{ produit.id }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Stock
+                            <span class="fw-bold {{ produit.stock > 0 ? 'text-success' : 'text-danger' }}">
+                                {{ produit.stock }} pièces
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 {% endblock %}
