@@ -26,3 +26,28 @@ motDePasse : Mot de passe
 nom : Nom
 prenom : Prénom
 accepterConditions : Accepter les conditions générales
+
+nomProduit : Nom
+prix : Prix
+marque : Marque
+description : Description
+stock : Stock
+status : Statut
+taille : Taille
+voir : Voir
+modifier : Modifier
+pasEnregistrements : Aucun enregistrement trouvé
+nouveauProduit : Nouveau produit
+
+nouveauPantalon : Nouveau pantalon
+nouveauPull : Nouveau pull
+nouveauTShirt : Nouveau t-shirt
+nouveauShort : Nouveau short
+
+creerPantalon : Créer un pantalon
+creerPull : Créer un pull
+creerTShirt : Créer un t-shirt
+creerShort : Créer un short
+
+retourListe : Retour à la liste
+pasAutorise : Vous n'êtes pas autorisé à accéder à cette page.

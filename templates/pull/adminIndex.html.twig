@@ -1,24 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Pantalon index{% endblock %}
+{% block title %}{% trans %} pulls {% endtrans %} index{% endblock %}
 
 {% block body %}
 
 
 {% if is_granted('ROLE_ADMIN') %}
-    <h1 class='text-center'>Pull index</h1>
+    <h1 class='text-center'>{% trans %} pulls {% endtrans %} index</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nom</th>
-                <th>Prix</th>
-                <th>Marque</th>
-                <th>Description</th>
-                <th>Stock</th>
-                <th>Status</th>
-                <th>Taille</th>
+                <th>{% trans %} nomProduit {% endtrans %}</th>
+                <th>{% trans %} prix {% endtrans %}</th>
+                <th>{% trans %} marque {% endtrans %}</th>
+                <th>{% trans %} description {% endtrans %}</th>
+                <th>{% trans %} stock {% endtrans %}</th>
+                <th>{% trans %} status {% endtrans %}</th>
+                <th>{% trans %} taille {% endtrans %}</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -34,18 +34,18 @@
                 <td>{{ pull.status.value }}</td>
                 <td>{{ pull.taille }}</td>
                 <td>
-                    <a href="{{ path('app_pull_show', {'id': pull.id}) }}">show</a>
-                    <a href="{{ path('app_pull_edit', {'id': pull.id}) }}">edit</a>
+                    <a href="{{ path('app_pull_show', {'id': pull.id}) }}">{% trans %} voir {% endtrans %}</a>
+                    <a href="{{ path('app_pull_edit', {'id': pull.id}) }}">{% trans %} modifier {% endtrans %}</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="9">{% trans %} pasEnregistrements {% endtrans %}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_pull_new') }}">Create new</a>
+    <a href="{{ path('app_pull_new') }}" class='btn btn-outline-primary'>{% trans %} nouveauProduit {% endtrans %}</a>
 {% endif %}
 {% endblock %}

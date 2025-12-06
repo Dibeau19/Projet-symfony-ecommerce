@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New TShirt{% endblock %}
+{% block title %}{% trans %} nouveauTShirt {% endtrans %}{% endblock %}
 
 {% block body %}
 
 {% if is_granted('ROLE_ADMIN') %}
-    <h1>Create new TShirt</h1>
+    <h1>{% trans %} creerTShirt {% endtrans %}</h1>
 
     {{ include('t_shirt/_form.html.twig') }}
 
-    <a href="{{ path('app_t_shirt_index') }}">back to list</a>
+    <a href="{{ path('app_t_shirt_admin') }}">{% trans %} retourListe {% endtrans %}</a>
 {% else %}
-    <h1>Vous n'avez pas la permission d'accéder à cette page.</h1>
+    <h1>{% trans %} pasAutorise {% endtrans %}</h1>
 {% endif %}
 {% endblock %}

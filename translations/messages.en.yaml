@@ -26,3 +26,28 @@ motDePasse : Password
 nom : Name
 prenom : First Name
 accepterConditions : Accept Terms and Conditions
+
+nomProduit : Name
+prix : Price
+marque : Brand
+description : Description
+stock : Stock
+status : Status
+taille : Size
+voir : View
+modifier : Edit
+pasEnregistrements : No records found
+nouveauProduit : New Product
+
+nouveauPantalon : New Pants
+nouveauPull : New Sweater
+nouveauTShirt : New T-shirt
+nouveauShort : New Shorts
+
+creerPantalon : Create Pants
+creerPull : Create Sweater
+creerTShirt : Create T-shirt
+creerShort : Create Shorts
+
+retourListe : Back to list
+pasAutorise : You are not authorized to access this page.

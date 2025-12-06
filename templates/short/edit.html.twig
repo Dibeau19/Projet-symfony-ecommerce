@@ -12,6 +12,6 @@
 
     {{ include('short/_delete_form.html.twig') }}
 {% else %}
-    <h1>Vous n'avez pas la permission d'accéder à cette page.</h1>
+    <h1>{% trans %} pasAutorise {% endtrans %}</h1>
 {% endif %}
 {% endblock %}

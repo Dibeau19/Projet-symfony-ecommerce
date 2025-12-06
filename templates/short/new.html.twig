@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Short{% endblock %}
+{% block title %}{% trans %} nouveauShort {% endtrans %}{% endblock %}
 
 {% block body %}
 {% if is_granted('ROLE_ADMIN') %}
-    <h1>Create new Short</h1>
+    <h1>{% trans %} nouveauShort {% endtrans %}</h1>
 
     {{ include('short/_form.html.twig') }}
 
-    <a href="{{ path('app_short_index') }}">back to list</a>
+    <a href="{{ path('app_short_admin') }}">{% trans %} retourListe {% endtrans %}</a>
 {% else %}
-    <h1>Vous n'avez pas la permission d'accéder à cette page.</h1>
+    <h1>{% trans %} pasAutorise {% endtrans %}</h1>
 {% endif %}
 {% endblock %}
