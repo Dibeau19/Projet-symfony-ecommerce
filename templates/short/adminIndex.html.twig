@@ -6,7 +6,12 @@
 
 
 {% if is_granted('ROLE_ADMIN') %}
+<div class="container mt-3"> 
     <h1 class='text-center'>{% trans %} shorts {% endtrans %} index</h1>
+
+    <div class="alert alert-info text-center py-2">
+        <strong>{{ shorts.getTotalItemCount }}</strong>  {% trans %} shorts {% endtrans %} {% trans %} auTotal {% endtrans %}
+    </div>
 
     <table class="table">
         <thead>
@@ -19,7 +24,9 @@
                 <th>{% trans %} stock {% endtrans %}</th>
                 <th>{% trans %} status {% endtrans %}</th>
                 <th>{% trans %} taille {% endtrans %}</th>
-                <th>actions</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th>actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -33,10 +40,12 @@
                 <td>{{ short.stock }}</td>
                 <td>{{ short.Status }}</td>
                 <td>{{ short.taille }}</td>
-                <td>
-                    <a href="{{ path('app_short_show', {'id': short.id}) }}">{% trans %} voir {% endtrans %}</a>
-                    <a href="{{ path('app_short_edit', {'id': short.id}) }}">{% trans %} modifier {% endtrans %}</a>
-                </td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>
+                        <a href="{{ path('app_short_show', {'id': short.id}) }}" class="btn btn-sm btn-info">{% trans %} voir {% endtrans %}</a>
+                        <a href="{{ path('app_short_edit', {'id': short.id}) }}" class="btn btn-sm btn-warning">{% trans %} modifier {% endtrans %}</a>
+                    </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -46,6 +55,12 @@
         </tbody>
     </table>
 
+    <div class="d-flex justify-content-center my-4">
+        {{ knp_pagination_render(shorts) }}
+    </div>
+
     <a href="{{ path('app_short_new') }}" class='btn btn-outline-primary'>{% trans %} nouveauProduit {% endtrans %}</a>
+
+</div>
 {% endif %}
 {% endblock %}

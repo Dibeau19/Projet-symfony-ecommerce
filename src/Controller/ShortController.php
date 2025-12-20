@@ -12,23 +12,43 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/short')]
 final class ShortController extends AbstractController
 {
     #[Route(name: 'app_short_index', methods: ['GET'])]
-    public function index(ShortRepository $shortRepository): Response
+    public function index(ShortRepository $shortRepository, PaginatorInterface $paginator, Request $request ): Response
     {
+        $query = $shortRepository->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC') 
+            ->getQuery();
+
+        
+        $shorts = $paginator->paginate(
+            $query, 
+            $request->query->getInt('page', 1), 
+            10
+        );
         return $this->render('short/index.html.twig', [
-            'shorts' => $shortRepository->findAll(),
+            'shorts' => $shorts,
         ]);
     }
 
     #[Route('/admin', name: 'app_short_admin', methods: ['GET'])]
-    public function admin(ShortRepository $shortRepository): Response
+    public function admin(ShortRepository $shortRepository,PaginatorInterface $paginator,Request $request): Response
     {
+        $query = $shortRepository->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC')
+            ->getQuery();
+
+        $shorts = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10 
+        );
         return $this->render('short/adminIndex.html.twig', [
-            'shorts' => $shortRepository->findAll(),
+            'shorts' => $shorts,
         ]);
     }
 

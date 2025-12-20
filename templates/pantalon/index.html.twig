@@ -4,35 +4,48 @@
 
 {% block body %}
 
-<h1 class="mb-4 text-center">{% trans %} nosPantalons {% endtrans %}</h1>
+<div class="container my-4"> 
+    
+    <h1 class="mb-4 text-center">{% trans %} nosPantalons {% endtrans %}</h1>
 
-<div class="row row-cols-1 row-cols-md-4 g-4">
-    {% for pantalon in pantalons %}
-            <div class="col">
-                <div class="card h-100 shadow-sm card-hover">
+    <div class="text-muted text-end mb-3">
+        {{ pantalons.getTotalItemCount }} {% trans %} produits {% endtrans %}
+    </div>
 
-                    {% set image = pantalon.getImages()|first %}
-                    {% if image %}
-                        <img src="{{ asset('uploads/' ~ image.url) }}" 
-                            class="card-img-top" 
-                            alt="{{ pantalon.nom }}">
-                    {% else %}
-                        <div class="card-img-top bg-light text-center" style="height:200px; line-height:200px;">
-                            {% trans %} pasImage {% endtrans %}
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for pantalon in pantalons %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm card-hover">
+
+                        {% set image = pantalon.getImages()|first %}
+                        {% if image %}
+                            <img src="{{ asset('uploads/' ~ image.url) }}" 
+                                class="card-img-top" 
+                                style="height: 400px; object-fit: cover;" 
+                                alt="{{ pantalon.nom }}">
+                        {% else %}
+                            <div class="card-img-top bg-light text-center" style="height:400px; line-height:400px;">
+                                {% trans %} pasImage {% endtrans %}
+                            </div>
+                        {% endif %}
+
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ pantalon.nom }}</h5>
+                            <p class="card-text text-muted text-truncate">{{ pantalon.description }}</p> 
+                            <p class="fw-bold">{{ pantalon.prix }} €</p>
                         </div>
-                    {% endif %}
 
-                    <div class="card-body text-center">
-                        <h5 class="card-title">{{ pantalon.nom }}</h5>
-                        <p class="card-text text-muted">{{ pantalon.description }}</p>
-                        <p class="fw-bold">{{ pantalon.prix }} €</p>
+                        <a href="{{ path('app_' ~ pantalon.type ~ '_show', {'id': pantalon.id}) }}" 
+                        class="stretched-link"></a>
+
                     </div>
-
-                    <a href="{{ path('app_' ~ pantalon.type ~ '_show', {'id': pantalon.id}) }}" 
-                    class="stretched-link"></a>
-
                 </div>
-            </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
+
+    <div class="d-flex justify-content-center mt-5">
+        {{ knp_pagination_render(pantalons) }}
+    </div>
+
 </div>
 {% endblock %}

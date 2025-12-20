@@ -6,46 +6,61 @@
 
 
 {% if is_granted('ROLE_ADMIN') %}
-    <h1 class='text-center'>{% trans %} tshirts {% endtrans %} index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>{% trans %} nomProduit {% endtrans %}</th>
-                <th>{% trans %} prix {% endtrans %}</th>
-                <th>{% trans %} marque {% endtrans %}</th>
-                <th>{% trans %} description {% endtrans %}</th>
-                <th>{% trans %} stock {% endtrans %}</th>
-                <th>{% trans %} status {% endtrans %}</th>
-                <th>{% trans %} taille {% endtrans %}</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for t_shirt in t_shirts %}
-            <tr>
-                <td>{{ t_shirt.id }}</td>
-                <td>{{ t_shirt.nom }}</td>
-                <td>{{ t_shirt.prix }}</td>
-                <td>{{ t_shirt.marque }}</td>
-                <td>{{ t_shirt.description }}</td>
-                <td>{{ t_shirt.stock }}</td>
-                <td>{{ t_shirt.Status }}</td>
-                <td>{{ t_shirt.taille }}</td>
-                <td>
-                    <a href="{{ path('app_t_shirt_show', {'id': t_shirt.id}) }}">{% trans %} voir {% endtrans %}</a>
-                    <a href="{{ path('app_t_shirt_edit', {'id': t_shirt.id}) }}">{% trans %} modifier {% endtrans %}</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">{% trans %} pasEnregistrements {% endtrans %}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container mt-3"> 
+        <h1 class='text-center'>{% trans %} tshirts {% endtrans %} index</h1>
 
-    <a href="{{ path('app_t_shirt_new') }}" class='btn btn-outline-primary' >{% trans %} nouveauProduit {% endtrans %}</a>
+        <div class="alert alert-info text-center py-2">
+            <strong>{{ t_shirts.getTotalItemCount }}</strong>  {% trans %} tshirts {% endtrans %} {% trans %} auTotal {% endtrans %}
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>{% trans %} nomProduit {% endtrans %}</th>
+                    <th>{% trans %} prix {% endtrans %}</th>
+                    <th>{% trans %} marque {% endtrans %}</th>
+                    <th>{% trans %} description {% endtrans %}</th>
+                    <th>{% trans %} stock {% endtrans %}</th>
+                    <th>{% trans %} status {% endtrans %}</th>
+                    <th>{% trans %} taille {% endtrans %}</th>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <th>actions</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+            {% for t_shirt in t_shirts %}
+                <tr>
+                    <td>{{ t_shirt.id }}</td>
+                    <td>{{ t_shirt.nom }}</td>
+                    <td>{{ t_shirt.prix }}</td>
+                    <td>{{ t_shirt.marque }}</td>
+                    <td>{{ t_shirt.description }}</td>
+                    <td>{{ t_shirt.stock }}</td>
+                    <td>{{ t_shirt.Status }}</td>
+                    <td>{{ t_shirt.taille }}</td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td>
+                            <a href="{{ path('app_t_shirt_show', {'id': t_shirt.id}) }}" class="btn btn-sm btn-info">{% trans %} voir {% endtrans %}</a>
+                            <a href="{{ path('app_t_shirt_edit', {'id': t_shirt.id}) }}" class="btn btn-sm btn-warning">{% trans %} modifier {% endtrans %}</a>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">{% trans %} pasEnregistrements {% endtrans %}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center my-4">
+            {{ knp_pagination_render(t_shirts) }}
+        </div>
+
+        <a href="{{ path('app_t_shirt_new') }}" class='btn btn-outline-primary' >{% trans %} nouveauProduit {% endtrans %}</a>
+    </div>
 {% endif %}
 {% endblock %}

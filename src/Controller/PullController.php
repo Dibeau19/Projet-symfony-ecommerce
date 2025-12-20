@@ -12,23 +12,46 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/pull')]
 final class PullController extends AbstractController
 {
     #[Route(name: 'app_pull_index', methods: ['GET'])]
-    public function index(PullRepository $pullRepository): Response
+    public function index(PullRepository $pullRepository, PaginatorInterface $paginator, Request $request ): Response
     {
+        $query = $pullRepository->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC') 
+            ->getQuery();
+
+        
+        $pulls = $paginator->paginate(
+            $query, 
+            $request->query->getInt('page', 1), 
+            10
+        );
         return $this->render('pull/index.html.twig', [
-            'pulls' => $pullRepository->findAll(),
+            'pulls' => $pulls,
         ]);
     }
 
     #[Route('/admin', name: 'app_pull_admin', methods: ['GET'])]
-    public function admin(PullRepository $pullRepository): Response
+    public function admin(PullRepository $pullRepository, PaginatorInterface $paginator, Request $request ): Response
     {
+
+        $query = $pullRepository->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC') 
+            ->getQuery();
+
+        
+        $pulls = $paginator->paginate(
+            $query, 
+            $request->query->getInt('page', 1), 
+            10
+        );
+
         return $this->render('pull/adminIndex.html.twig', [
-            'pulls' => $pullRepository->findAll(),
+            'pulls' => $pulls,
         ]);
     }
 

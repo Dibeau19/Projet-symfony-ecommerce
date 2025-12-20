@@ -7,81 +7,102 @@ use App\Entity\Pantalon;
 use App\Form\Pantalon1Type;
 use App\Repository\PantalonRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-
 #[Route('/pantalon')]
 final class PantalonController extends AbstractController
 {
     #[Route(name: 'app_pantalon_index', methods: ['GET'])]
-    public function index(PantalonRepository $pantalonRepository): Response
+    public function index(PantalonRepository $pantalonRepository, PaginatorInterface $paginator, Request $request ): Response
     {
+        $query = $pantalonRepository->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC') 
+            ->getQuery();
+
+        
+        $pantalons = $paginator->paginate(
+            $query, 
+            $request->query->getInt('page', 1), 
+            10
+        );
+
         return $this->render('pantalon/index.html.twig', [
-            'pantalons' => $pantalonRepository->findAll(),
+            'pantalons' => $pantalons,
         ]);
     }
 
     #[Route('/admin', name: 'app_pantalon_admin', methods: ['GET'])]
-    public function admin(PantalonRepository $pantalonRepository): Response
+    public function admin(PantalonRepository $pantalonRepository,PaginatorInterface $paginator,Request $request): Response
     {
+        $query = $pantalonRepository->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC')
+            ->getQuery();
+
+        $pantalons = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('pantalon/adminIndex.html.twig', [
-            'pantalons' => $pantalonRepository->findAll(),
+            'pantalons' => $pantalons,
         ]);
     }
 
     #[Route('/new', name: 'app_pantalon_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
-{
-    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-    $pantalon = new Pantalon();
-    $form = $this->createForm(Pantalon1Type::class, $pantalon);
-    $form->handleRequest($request);
+        $pantalon = new Pantalon();
+        $form = $this->createForm(Pantalon1Type::class, $pantalon);
+        $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        
-        $imageFiles = $form->get('images')->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $imageFiles = $form->get('images')->getData();
 
-        if ($imageFiles && !is_array($imageFiles)) {
-            $imageFiles = [$imageFiles];
-        }
-
-        if ($imageFiles) {
-            foreach ($imageFiles as $imageFile) {
-                if (!$imageFile instanceof UploadedFile) {
-                    continue;
-                }
-
-                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
-
-                $imageFile->move(
-                    $this->getParameter('uploads_directory'),
-                    $newFilename
-                );
-
-                $image = new Image();
-                $image->setUrl($newFilename);
-                
-                $pantalon->addImage($image);
-                $entityManager->persist($image);
+            if ($imageFiles && !is_array($imageFiles)) {
+                $imageFiles = [$imageFiles];
             }
+
+            if ($imageFiles) {
+                foreach ($imageFiles as $imageFile) {
+                    if (!$imageFile instanceof UploadedFile) {
+                        continue;
+                    }
+
+                    $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                    $imageFile->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+
+                    $image = new Image();
+                    $image->setUrl($newFilename);
+                    
+                    $pantalon->addImage($image);
+                    $entityManager->persist($image);
+                }
+            }
+
+            $entityManager->persist($pantalon);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_pantalon_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        $entityManager->persist($pantalon);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_pantalon_index', [], Response::HTTP_SEE_OTHER);
+        return $this->render('pantalon/new.html.twig', [
+            'pantalon' => $pantalon,
+            'form' => $form,
+        ]);
     }
-
-    return $this->render('pantalon/new.html.twig', [
-        'pantalon' => $pantalon,
-        'form' => $form,
-    ]);
-}
 
     #[Route('/{id}', name: 'app_pantalon_show', methods: ['GET'])]
     public function show(Pantalon $pantalon): Response
@@ -93,51 +114,51 @@ final class PantalonController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_pantalon_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Pantalon $pantalon, EntityManagerInterface $entityManager): Response
-{
-    $this->denyAccessUnlessGranted('ROLE_ADMIN');
-    
-    $form = $this->createForm(Pantalon1Type::class, $pantalon);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         
-        $imageFiles = $form->get('images')->getData();
+        $form = $this->createForm(Pantalon1Type::class, $pantalon);
+        $form->handleRequest($request);
 
-        if ($imageFiles && !is_array($imageFiles)) {
-            $imageFiles = [$imageFiles];
-        }
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $imageFiles = $form->get('images')->getData();
 
-        if ($imageFiles) {
-            foreach ($imageFiles as $imageFile) {
-                if (!$imageFile instanceof UploadedFile) {
-                    continue;
-                }
-
-                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
-
-                $imageFile->move(
-                    $this->getParameter('uploads_directory'),
-                    $newFilename
-                );
-
-                $image = new Image();
-                $image->setUrl($newFilename);
-
-                $pantalon->addImage($image);
-                $entityManager->persist($image);
+            if ($imageFiles && !is_array($imageFiles)) {
+                $imageFiles = [$imageFiles];
             }
+
+            if ($imageFiles) {
+                foreach ($imageFiles as $imageFile) {
+                    if (!$imageFile instanceof UploadedFile) {
+                        continue;
+                    }
+
+                    $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                    $imageFile->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+
+                    $image = new Image();
+                    $image->setUrl($newFilename);
+
+                    $pantalon->addImage($image);
+                    $entityManager->persist($image);
+                }
+            }
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_pantalon_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_pantalon_index', [], Response::HTTP_SEE_OTHER);
+        return $this->render('pantalon/edit.html.twig', [
+            'pantalon' => $pantalon,
+            'form' => $form,
+        ]);
     }
-
-    return $this->render('pantalon/edit.html.twig', [
-        'pantalon' => $pantalon,
-        'form' => $form,
-    ]);
-}
 
     #[Route('/{id}', name: 'app_pantalon_delete', methods: ['POST'])]
     public function delete(Request $request, Pantalon $pantalon, EntityManagerInterface $entityManager): Response

@@ -3,34 +3,48 @@
 {% block title %}Pull index{% endblock %}
 
 {% block body %}
+
+<div class="container my-4"> 
     <h1 class="mb-4 text-center">{% trans %} nosPulls {% endtrans %}</h1>
-<div class="row row-cols-1 row-cols-md-4 g-4">
-    {% for pull in pulls %}
-            <div class="col">
-                <div class="card h-100 shadow-sm card-hover">
 
-                    {% set image = pull.getImages()|first %}
-                    {% if image %}
-                        <img src="{{ asset('uploads/' ~ image.url) }}" 
-                            class="card-img-top" 
-                            alt="{{ pull.nom }}">
-                    {% else %}
-                        <div class="card-img-top bg-light text-center" style="height:200px; line-height:200px;">
-                            {% trans %} pasImage {% endtrans %}
+    <div class="text-muted text-end mb-3">
+        {{ pulls.getTotalItemCount }} {% trans %} produits {% endtrans %}
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for pull in pulls %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm card-hover">
+
+                        {% set image = pull.getImages()|first %}
+                        {% if image %}
+                            <img src="{{ asset('uploads/' ~ image.url) }}" 
+                                class="card-img-top" 
+                                style="height: 400px; object-fit: cover;" 
+                                alt="{{ pull.nom }}">
+                        {% else %}
+                            <div class="card-img-top bg-light text-center" style="height:400px; line-height:400px;">
+                                {% trans %} pasImage {% endtrans %}
+                            </div>
+                        {% endif %}
+
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ pull.nom }}</h5>
+                            <p class="card-text text-muted">{{ pull.description }}</p>
+                            <p class="fw-bold">{{ pull.prix }} €</p>
                         </div>
-                    {% endif %}
 
-                    <div class="card-body text-center">
-                        <h5 class="card-title">{{ pull.nom }}</h5>
-                        <p class="card-text text-muted">{{ pull.description }}</p>
-                        <p class="fw-bold">{{ pull.prix }} €</p>
+                        <a href="{{ path('app_' ~ pull.type ~ '_show', {'id': pull.id}) }}" 
+                        class="stretched-link"></a>
+
                     </div>
-
-                    <a href="{{ path('app_' ~ pull.type ~ '_show', {'id': pull.id}) }}" 
-                    class="stretched-link"></a>
-
                 </div>
-            </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
+
+    <div class="d-flex justify-content-center mt-5">
+        {{ knp_pagination_render(pulls) }}
+    </div>
+
 </div>
 {% endblock %}

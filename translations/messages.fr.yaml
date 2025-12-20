@@ -49,5 +49,8 @@ creerPull : Créer un pull
 creerTShirt : Créer un t-shirt
 creerShort : Créer un short
 
+produits : Produits
+auTotal : au total.
+
 retourListe : Retour à la liste
 pasAutorise : Vous n'êtes pas autorisé à accéder à cette page.

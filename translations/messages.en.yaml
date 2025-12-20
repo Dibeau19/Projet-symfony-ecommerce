@@ -49,5 +49,8 @@ creerPull : Create Sweater
 creerTShirt : Create T-shirt
 creerShort : Create Shorts
 
+produits : Products
+auTotal : in total.
+
 retourListe : Back to list
 pasAutorise : You are not authorized to access this page.

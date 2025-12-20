@@ -6,7 +6,13 @@
 
 
 {% if is_granted('ROLE_ADMIN') %}
+
+<div class="container mt-3"> 
     <h1 class='text-center'>{% trans %} pulls {% endtrans %} index</h1>
+
+    <div class="alert alert-info text-center py-2">
+            <strong>{{ pulls.getTotalItemCount }}</strong> {% trans %} pulls {% endtrans %} {% trans %} auTotal {% endtrans %}
+        </div>
 
     <table class="table">
         <thead>
@@ -19,7 +25,9 @@
                 <th>{% trans %} stock {% endtrans %}</th>
                 <th>{% trans %} status {% endtrans %}</th>
                 <th>{% trans %} taille {% endtrans %}</th>
-                <th>actions</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th>actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -33,10 +41,12 @@
                 <td>{{ pull.stock }}</td>
                 <td>{{ pull.status.value }}</td>
                 <td>{{ pull.taille }}</td>
-                <td>
-                    <a href="{{ path('app_pull_show', {'id': pull.id}) }}">{% trans %} voir {% endtrans %}</a>
-                    <a href="{{ path('app_pull_edit', {'id': pull.id}) }}">{% trans %} modifier {% endtrans %}</a>
-                </td>
+                {% if is_granted('ROLE_ADMIN') %}
+                        <td>
+                            <a href="{{ path('app_pull_show', {'id': pull.id}) }}" class="btn btn-sm btn-info">{% trans %} voir {% endtrans %}</a>
+                            <a href="{{ path('app_pull_edit', {'id': pull.id}) }}" class="btn btn-sm btn-warning">{% trans %} modifier {% endtrans %}</a>
+                        </td>
+                    {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -45,6 +55,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="d-flex justify-content-center my-4">
+        {{ knp_pagination_render(pulls) }}
+    </div>
 
     <a href="{{ path('app_pull_new') }}" class='btn btn-outline-primary'>{% trans %} nouveauProduit {% endtrans %}</a>
 {% endif %}

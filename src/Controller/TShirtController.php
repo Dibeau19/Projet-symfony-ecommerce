@@ -12,23 +12,43 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/t/shirt')]
 final class TShirtController extends AbstractController
 {
     #[Route(name: 'app_t_shirt_index', methods: ['GET'])]
-    public function index(TShirtRepository $tShirtRepository): Response
+    public function index(TShirtRepository $tShirtRepository, PaginatorInterface $paginator, Request $request ): Response
     {
+        $query = $tShirtRepository->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC') 
+            ->getQuery();
+
+        
+        $tshirts = $paginator->paginate(
+            $query, 
+            $request->query->getInt('page', 1), 
+            10
+        );
         return $this->render('t_shirt/index.html.twig', [
-            't_shirts' => $tShirtRepository->findAll(),
+            't_shirts' => $tshirts,
         ]);
     }
 
     #[Route('/admin', name: 'app_t_shirt_admin', methods: ['GET'])]
-    public function admin(TShirtRepository $tShirtRepository): Response
+    public function admin(TShirtRepository $tShirtRepository,PaginatorInterface $paginator,Request $request): Response
     {
+        $query = $tShirtRepository->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC')
+            ->getQuery();
+
+        $tshirts = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
         return $this->render('t_shirt/adminIndex.html.twig', [
-            't_shirts' => $tShirtRepository->findAll(),
+            't_shirts' => $tshirts,
         ]);
     }
 

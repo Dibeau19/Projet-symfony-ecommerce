@@ -3,35 +3,47 @@
 {% block title %}TShirt index{% endblock %}
 
 {% block body %} 
+<div class="container my-4"> 
+
     <h1 class="mb-4 text-center">{% trans %} nosTShirts {% endtrans %}</h1>
 
-<div class="row row-cols-1 row-cols-md-4 g-4">
-    {% for t_shirt in t_shirts %}
-            <div class="col">
-                <div class="card h-100 shadow-sm card-hover">
+    <div class="text-muted text-end mb-3">
+        {{ t_shirts.getTotalItemCount }} {% trans %} produits {% endtrans %}
+    </div>
 
-                    {% set image = t_shirt.getImages()|first %}
-                    {% if image %}
-                        <img src="{{ asset('uploads/' ~ image.url) }}" 
-                            class="card-img-top" 
-                            alt="{{ t_shirt.nom }}">
-                    {% else %}
-                        <div class="card-img-top bg-light text-center" style="height:200px; line-height:200px;">
-                            {% trans %} pasImage {% endtrans %}
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for t_shirt in t_shirts %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm card-hover">
+
+                        {% set image = t_shirt.getImages()|first %}
+                        {% if image %}
+                            <img src="{{ asset('uploads/' ~ image.url) }}" 
+                                class="card-img-top" 
+                                style="height: 400px; object-fit: cover;" 
+                                alt="{{ t_shirt.nom }}">
+                        {% else %}
+                            <div class="card-img-top bg-light text-center" style="height:400px; line-height:400px;">
+                                {% trans %} pasImage {% endtrans %}
+                            </div>
+                        {% endif %}
+
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ t_shirt.nom }}</h5>
+                            <p class="card-text text-muted">{{ t_shirt.description }}</p>
+                            <p class="fw-bold">{{ t_shirt.prix }} €</p>
                         </div>
-                    {% endif %}
 
-                    <div class="card-body text-center">
-                        <h5 class="card-title">{{ t_shirt.nom }}</h5>
-                        <p class="card-text text-muted">{{ t_shirt.description }}</p>
-                        <p class="fw-bold">{{ t_shirt.prix }} €</p>
+                        <a href="{{ path('app_' ~ t_shirt.type ~ '_show', {'id': t_shirt.id}) }}" 
+                        class="stretched-link"></a>
+
                     </div>
-
-                    <a href="{{ path('app_' ~ t_shirt.type ~ '_show', {'id': t_shirt.id}) }}" 
-                    class="stretched-link"></a>
-
                 </div>
-            </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
+    <div class="d-flex justify-content-center mt-5">
+        {{ knp_pagination_render(t_shirts) }}
+    </div>
+
 </div>
 {% endblock %}

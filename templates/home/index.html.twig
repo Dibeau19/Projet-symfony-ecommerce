@@ -4,36 +4,49 @@
 
 {% block body %}
 
-<h1 class="mb-4 text-center">{% trans %} nosProduits {% endtrans %}</h1>
+<div class="container my-4"> 
 
-<div class="row row-cols-1 row-cols-md-4 g-4">
-    {% for product in products %}
-        <div class="col">
-            <div class="card h-100 shadow-sm card-hover">
+    <h1 class="mb-4 text-center">{% trans %} nosProduits {% endtrans %}</h1>
 
-                {% set image = product.getImages()|first %}
-                {% if image %}
-                    <img src="{{ asset('uploads/' ~ image.url) }}" 
-                         class="card-img-top" 
-                         alt="{{ product.nom }}">
-                {% else %}
-                    <div class="card-img-top bg-light text-center" style="height:200px; line-height:200px;">
-                        {% trans %} pasImage {% endtrans %}
+    <div class="text-muted text-end mb-3">
+            {{ products.getTotalItemCount }} {% trans %} produits {% endtrans %}
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for product in products %}
+            <div class="col">
+                <div class="card h-100 shadow-sm card-hover">
+
+                    {% set image = product.getImages()|first %}
+                    {% if image %}
+                        <img src="{{ asset('uploads/' ~ image.url) }}" 
+                            class="card-img-top" 
+                            style="height: 400px; object-fit: cover;" 
+                            alt="{{ product.nom }}">
+                            
+                    {% else %}
+                        <div class="card-img-top bg-light text-center" style="height:400px; line-height:400px;">
+                            {% trans %} pasImage {% endtrans %}
+                        </div>
+                    {% endif %}
+
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ product.nom }}</h5>
+                        <p class="card-text text-muted">{{ product.description }}</p>
+                        <p class="fw-bold">{{ product.prix }} €</p>
                     </div>
-                {% endif %}
 
-                <div class="card-body text-center">
-                    <h5 class="card-title">{{ product.nom }}</h5>
-                    <p class="card-text text-muted">{{ product.description }}</p>
-                    <p class="fw-bold">{{ product.prix }} €</p>
+                    <a href="{{ path('app_' ~ product.type ~ '_show', {'id': product.id}) }}" 
+                    class="stretched-link"></a>
+
                 </div>
-
-                <a href="{{ path('app_' ~ product.type ~ '_show', {'id': product.id}) }}" 
-                   class="stretched-link"></a>
-
             </div>
+        {% endfor %}
+        
+    </div>
+    <div class="d-flex justify-content-center mt-5">
+            {{ knp_pagination_render(products) }}
         </div>
-    {% endfor %}
 </div>
 
 {% endblock %}
