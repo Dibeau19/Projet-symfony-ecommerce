@@ -38,7 +38,6 @@
         <div class="col-md-6">
             <form method="post" action="{{ path('commande_index') }}">
                 
-                {# Display global form errors if any #}
                 {{ form_errors(form) }}
                 {{ form_errors(carteForm) }}
 
@@ -117,7 +116,6 @@
                 </div>
 
             </form>
-            {# Fin du formulaire unique #}
 
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
@@ -127,7 +125,6 @@
                     const existingCardContainer = document.getElementById('existing-card-container');
                     const newCardForm = document.getElementById('new-card-form');
 
-                    // Fonction pour activer/désactiver les champs d'un conteneur
                     function toggleInputs(container, enable) {
                         const inputs = container.querySelectorAll('input, select, textarea');
                         inputs.forEach(input => {
@@ -135,9 +132,7 @@
                         });
                     }
 
-                    // Initialisation : si on a des adresses existantes, on cache le formulaire "nouveau" et on le désactive
                     if (existingAddressContainer) {
-                         // Vérifier si "new" est déjà sélectionné (rechargement de page ?)
                          const newOption = document.getElementById('new_address_option');
                          if (!newOption.checked) {
                              toggleInputs(newAddressForm, false);
@@ -151,7 +146,6 @@
                          }
                     }
 
-                    // Gestion Adresses
                     if (existingAddressContainer) {
                         const addressRadios = existingAddressContainer.querySelectorAll('input[name="adresse_id"]');
                         addressRadios.forEach(radio => {
@@ -167,7 +161,6 @@
                         });
                     }
 
-                    // Gestion Cartes
                     if (existingCardContainer) {
                         const cardRadios = existingCardContainer.querySelectorAll('input[name="carte_id"]');
                         cardRadios.forEach(radio => {
