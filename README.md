@@ -1,10 +1,10 @@
 # Projet-symfony
 
-##Sujet : "Vêtements".
+## Sujet : "Vêtements".
 
 J'ai pris les vêtements présent sur https://divinbydivin.com/ pour avoir les même types de produits sur tout le site.
 
-##Indications :
+## Indications :
 
 Je vous mets à disposition le base SQL que j'ai utiliser pour faire mes tests (projet_symfony.sql).
 
@@ -20,7 +20,7 @@ Mot de passe : test
 
 Si vous avez des questions ou si vous rencontrez des bugs n'hésitez pas à me contacter sur discord : dibeau\_
 
-###Projet réaliser par JANTZEN Thibaut.
+### Projet réaliser par JANTZEN Thibaut.
 
 
 
