@@ -26,6 +26,7 @@ class AdresseType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Adresse::class,
+            'csrf_protection' => false,
         ]);
     }
 }

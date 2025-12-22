@@ -151,7 +151,7 @@ class Produit
     {
         return match(true) {
             $this instanceof Pull => 'pull',
-            $this instanceof TShirt => 'tshirt',
+            $this instanceof TShirt => 't_shirt',
             $this instanceof Pantalon => 'pantalon',
             $this instanceof Short => 'short',
             default => 'produit',

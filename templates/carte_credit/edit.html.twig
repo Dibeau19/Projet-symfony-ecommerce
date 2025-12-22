@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}modifierCarteCredit{% endtrans %}{% endblock %}
+
+{% block body %}
+    <h1>{% trans %}modifierCarteCredit{% endtrans %}</h1>
+
+    {{ include('carte_credit/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a href="{{ path('app_user_profile') }}">{% trans %}retourProfil{% endtrans %}</a>
+
+    {{ include('carte_credit/_delete_form.html.twig') }}
+{% endblock %}

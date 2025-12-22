@@ -39,7 +39,7 @@
                     <td>{{ t_shirt.marque }}</td>
                     <td>{{ t_shirt.description }}</td>
                     <td>{{ t_shirt.stock }}</td>
-                    <td>{{ t_shirt.Status }}</td>
+                    <td>{{ t_shirt.Status.value }}</td>
                     <td>{{ t_shirt.taille }}</td>
                     {% if is_granted('ROLE_ADMIN') %}
                         <td>

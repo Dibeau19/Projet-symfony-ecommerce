@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}ajouterCarteCredit{% endtrans %}{% endblock %}
+
+{% block body %}
+    <h1>{% trans %}ajouterCarteCredit{% endtrans %}</h1>
+
+    {{ include('carte_credit/_form.html.twig') }}
+
+    <a href="{{ path('app_user_profile') }}">{% trans %}retourProfil{% endtrans %}</a>
+{% endblock %}

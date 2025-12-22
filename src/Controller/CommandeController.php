@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Adresse;
+use App\Entity\CarteCredit;
 use App\Entity\Commande;
 use App\Enum\StatusCommande;
 use App\Form\AdresseType;
+use App\Form\CarteCreditType;
 use App\Repository\CommandeRepository;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -46,33 +48,56 @@ final class CommandeController extends AbstractController
             }
         }
 
+        /** @var \App\Entity\User $user */
         $user = $this->getUser();
         $adresse = new Adresse();
-        $form = $this->createForm(AdresseType::class, $adresse);
-        $form->handleRequest($request);
+        $adresseForm = $this->createForm(AdresseType::class, $adresse);
 
-        // Cas 1 : Nouvelle adresse via formulaire
-        if ($form->isSubmitted() && $form->isValid()) {
-            $adresse->addUser($user);
-            $em->persist($adresse);
-            return $this->processOrder($user, $adresse, $dataPanier, $em, $session);
-        }
+        $carteCredit = new CarteCredit();
+        $carteForm = $this->createForm(CarteCreditType::class, $carteCredit);
 
-        // Cas 2 : Adresse existante sélectionnée
-        if ($request->isMethod('POST') && $request->request->has('adresse_id')) {
+        if ($request->isMethod('POST')) {
+
+            $selectedAdresse = null;
+            $selectedCarte = null;
             $adresseId = $request->request->get('adresse_id');
-            $selectedAdresse = $em->getRepository(Adresse::class)->find($adresseId);
+            $carteId = $request->request->get('carte_id');
 
-            if ($selectedAdresse && $selectedAdresse->getUsers()->contains($user)) {
-                return $this->processOrder($user, $selectedAdresse, $dataPanier, $em, $session);
+            if ($adresseId === 'new' || (!$adresseId && $user->getAdresses()->isEmpty())) {
+                 $adresseForm->handleRequest($request);
+                 if ($adresseForm->isSubmitted() && $adresseForm->isValid()) {
+                    $adresse->addUser($user);
+                    $em->persist($adresse);
+                    $selectedAdresse = $adresse;
+                 }
+            } elseif ($adresseId) {
+                $selectedAdresse = $em->getRepository(Adresse::class)->find($adresseId);
+            }
+
+            if ($carteId === 'new' || (!$carteId && $user->getCartesCredit()->isEmpty())) {
+                $carteForm->handleRequest($request);
+                if ($carteForm->isSubmitted() && $carteForm->isValid()) {
+                    $carteCredit->setUser($user);
+                    $em->persist($carteCredit);
+                    $selectedCarte = $carteCredit;
+                }
+            } elseif ($carteId) {
+                $selectedCarte = $em->getRepository(CarteCredit::class)->find($carteId);
+            }
+
+            if ($selectedAdresse && $selectedCarte) {
+                if ($selectedAdresse->getUsers()->contains($user) && $selectedCarte->getUser() === $user) {
+                    return $this->processOrder($user, $selectedAdresse, $dataPanier, $em, $session);
+                }
             }
         }
 
         return $this->render('commande/index.html.twig', [
-            'form' => $form->createView(),
+            'form' => $adresseForm->createView(),
+            'carteForm' => $carteForm->createView(),
             'items' => $dataPanier,
             'total' => $total,
-            'user' => $user // Passer l'utilisateur pour afficher ses adresses
+            'user' => $user
         ]);
     }
 
@@ -90,7 +115,6 @@ final class CommandeController extends AbstractController
             $produit = $item['produit'];
             $commande->addProduit($produit);
             
-            // Decrement stock
             $newStock = $produit->getStock() - $item['quantite'];
             $produit->setStock($newStock);
             

@@ -19,7 +19,6 @@ class TShirt1Type extends AbstractType
             ->add('prix')
             ->add('marque')
             ->add('description')
-            ->add('Status')
             ->add('taille')
             ->add('stock')
             ->add('status', ChoiceType::class, [

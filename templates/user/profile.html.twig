@@ -37,13 +37,14 @@
                     <div class="row">
                         {% for adresse in user.adresses %}
                             <div class="col-md-6 mb-3">
-                                <div class="card h-100 border-light bg-light">
+                                <div class="card h-100 border-light bg-light position-relative">
                                     <div class="card-body">
                                         <p class="mb-1"><strong>Adresse #{{ loop.index }}</strong></p>
                                         <p class="mb-0">{{ adresse.rue }}</p>
                                         <p class="mb-0">{{ adresse.codePostal }} {{ adresse.ville }}</p>
                                         <p class="mb-0">{{ adresse.pays }}</p>
                                     </div>
+                                    <a href="{{ path('app_adresse_edit', {'id': adresse.id}) }}" class="stretched-link" aria-label="{% trans %}modifierAdresse{% endtrans %}"></a>
                                 </div>
                             </div>
                         {% else %}
@@ -51,6 +52,42 @@
                                 <p class="text-muted text-center my-3">{% trans %}aucuneAdresse{% endtrans %}</p>
                             </div>
                         {% endfor %}
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{{ path('app_adresse_new') }}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-plus me-1"></i>{% trans %}ajouterAdresse{% endtrans %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {# Section Cartes de Crédit #}
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-credit-card me-2"></i>{% trans %}mesCartes{% endtrans %}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for carte in user.cartesCredit %}
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-light bg-light position-relative">
+                                    <div class="card-body">
+                                        <p class="mb-1 fs-5"><strong>{{ carte.numero|slice(0, 4) }} **** **** {{ carte.numero|slice(-4) }}</strong></p>
+                                        <p class="mb-0 text-muted">Exp: {{ carte.dateExpiration|date('m/Y') }}</p>
+                                    </div>
+                                    <a href="{{ path('app_carte_credit_edit', {'id': carte.id}) }}" class="stretched-link" aria-label="{% trans %}modifierCarteCredit{% endtrans %}"></a>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="col-12">
+                                <p class="text-muted text-center my-3">{% trans %}aucuneCarte{% endtrans %}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{{ path('app_carte_credit_new') }}" class="btn btn-outline-info btn-sm">
+                            <i class="fas fa-plus me-1"></i>{% trans %}ajouterCarteCredit{% endtrans %}
+                        </a>
                     </div>
                 </div>
             </div>

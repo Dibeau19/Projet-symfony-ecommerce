@@ -45,9 +45,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Adresse::class, inversedBy: 'users')]
     private Collection $adresses;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: CarteCredit::class, orphanRemoval: true)]
+    private Collection $cartesCredit;
+
     public function __construct()
     {
         $this->adresses = new ArrayCollection();
+        $this->cartesCredit = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -172,6 +176,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeAdresse(Adresse $adresse): static
     {
         $this->adresses->removeElement($adresse);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CarteCredit>
+     */
+    public function getCartesCredit(): Collection
+    {
+        return $this->cartesCredit;
+    }
+
+    public function addCarteCredit(CarteCredit $carteCredit): static
+    {
+        if (!$this->cartesCredit->contains($carteCredit)) {
+            $this->cartesCredit->add($carteCredit);
+            $carteCredit->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCarteCredit(CarteCredit $carteCredit): static
+    {
+        if ($this->cartesCredit->removeElement($carteCredit)) {
+            // set the owning side to null (unless already changed)
+            if ($carteCredit->getUser() === $this) {
+                $carteCredit->setUser(null);
+            }
+        }
 
         return $this;
     }

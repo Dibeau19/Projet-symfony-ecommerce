@@ -39,7 +39,7 @@
                     <td>{{ pantalon.marque }}</td>
                     <td>{{ pantalon.description }}</td>
                     <td>{{ pantalon.stock }}</td>
-                    <td>{{ pantalon.status ? pantalon.status.name : 'N/A' }}</td>
+                    <td>{{ pantalon.status ? pantalon.status.value : 'N/A' }}</td>
                     <td>{{ pantalon.taille }}</td>
                     {% if is_granted('ROLE_ADMIN') %}
                         <td>

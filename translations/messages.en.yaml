@@ -95,7 +95,16 @@ monProfil: My Account
 mesCommandes: My Orders
 mesAdresses: My Addresses
 aucuneAdresse: No address saved
-prixTotal: Total Price
+
+mesCartes: My Payment Cards
+aucuneCarte: No card saved
+ajouterCarteCredit: Add Credit Card
+modifierCarteCredit: Edit Credit Card
+retourProfil: Back to Profile
+
 commande: Order
 informations: Information
 adresseLivraison: Delivery Address
+modifierAdresse: Edit Address
+ajouterAdresse: Add Address
+nouvelleAdresse: New Address

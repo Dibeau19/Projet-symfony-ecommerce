@@ -38,7 +38,7 @@
                 <td>{{ short.marque }}</td>
                 <td>{{ short.description }}</td>
                 <td>{{ short.stock }}</td>
-                <td>{{ short.Status }}</td>
+                <td>{{ short.Status.value }}</td>
                 <td>{{ short.taille }}</td>
                 {% if is_granted('ROLE_ADMIN') %}
                     <td>

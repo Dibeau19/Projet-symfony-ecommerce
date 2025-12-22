@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}nouvelleAdresse{% endtrans %}{% endblock %}
+
+{% block body %}
+    <h1>{% trans %}nouvelleAdresse{% endtrans %}</h1>
+
+    {{ include('adresse/_form.html.twig') }}
+
+    <a href="{{ path('app_user_profile') }}" class="btn btn-link">{% trans %}retourProfil{% endtrans %}</a>
+{% endblock %}

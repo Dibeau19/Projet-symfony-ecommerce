@@ -100,4 +100,12 @@ monProfil: Mon Compte
 mesCommandes: Mes commandes
 mesAdresses: Mes adresses
 aucuneAdresse: Aucune adresse enregistrée
-prixTotal: Prix Total
+
+mesCartes: Mes cartes de paiement
+aucuneCarte: Aucune carte enregistrée
+ajouterCarteCredit: Ajouter une carte de crédit
+modifierCarteCredit: Modifier la carte de crédit
+retourProfil: Retour au profil
+modifierAdresse: Modifier l'adresse
+ajouterAdresse: Ajouter une adresse
+nouvelleAdresse: Nouvelle adresse
