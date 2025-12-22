@@ -42,7 +42,27 @@
 
                     <div class="d-grid gap-2 mb-3">
                          {% if produit.stock > 0 %}
-                            <button class="btn btn-success btn-lg">{% trans %} ajouterPanier {% endtrans %}</button>
+                            <div 
+                            class="d-flex flex-column"
+                                data-controller="panier" 
+                                data-panier-add-url-value="{{ path('panier_add', {id: produit.id}) }}"
+                            >
+
+                                <button 
+                                    class="btn btn-success btn-lg w-100"
+                                    data-action="click->panier#add"
+                                >
+                                    Ajouter au panier
+                                </button>
+
+                                <div 
+                                    class="text-success fw-bold mt-2 d-none" 
+                                    data-panier-target="successMessage"
+                                >
+                                    Produit ajouté !
+                                </div>
+
+                            </div>
                          {% else %}
                             <button class="btn btn-secondary btn-lg" disabled>{% trans %} ruptureStock {% endtrans %}</button>
                          {% endif %}

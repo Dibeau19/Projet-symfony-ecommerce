@@ -6,9 +6,16 @@
 
     {% block stylesheets %}
         <link href="{{ asset('bootstrap.min.css') }}" rel="stylesheet">
+        {# J'ai déplacé ton css custom ici pour qu'il soit bien groupé #}
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     {% endblock %}
 
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    {# 👇 AJOUTE CE BLOC OBLIGATOIREMENT 👇 #}
+    {% block javascripts %}
+        {{ importmap('app') }}
+    {% endblock %}
+    {# 👆 C'est cette ligne qui lance tout le système JS #}
+
 </head>
 <body>
 

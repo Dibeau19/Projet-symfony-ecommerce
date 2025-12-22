@@ -36,6 +36,25 @@
                     <a class="nav-link" href="{{ path('app_short_index') }}">{% trans %} shorts {% endtrans %}</a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{{ path('panier_index') }}" 
+                    class="nav-link"
+                    data-controller="panier-status"
+                    >
+                        Panier
+                        
+                        <span class="badge bg-dark text-white ms-1 rounded-pill" data-panier-status-target="compteur">
+                            
+                            {% set total = 0 %}
+                            {% for quantity in app.session.get('panier', []) %}
+                                {% set total = total + quantity %}
+                            {% endfor %}
+                            {{ total }}
+                            
+                        </span>
+                    </a>
+                </li>
+
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_adminPage_index') }}">Admin</a> 

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection; 
+use Doctrine\Common\Collections\Collection;      
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -39,8 +41,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $adresse = null;
+    
+    #[ORM\ManyToMany(targetEntity: Adresse::class, inversedBy: 'users')]
+    private Collection $adresses;
+
+    public function __construct()
+    {
+        $this->adresses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -107,9 +115,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * Ensure the session doesn't contain actual password hashes by CRC32C-hashing them, as supported since Symfony 7.3.
-     */
     public function __serialize(): array
     {
         $data = (array) $this;
@@ -121,7 +126,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[\Deprecated]
     public function eraseCredentials(): void
     {
-        // @deprecated, to be removed when upgrading to Symfony 8
     }
 
     public function getNom(): ?string
@@ -148,14 +152,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAdresse(): ?string
+    /**
+     * @return Collection<int, Adresse>
+     */
+    public function getAdresses(): Collection
     {
-        return $this->adresse;
+        return $this->adresses;
     }
 
-    public function setAdresse(?string $adresse): static
+    public function addAdresse(Adresse $adresse): static
     {
-        $this->adresse = $adresse;
+        if (!$this->adresses->contains($adresse)) {
+            $this->adresses->add($adresse);
+        }
+
+        return $this;
+    }
+
+    public function removeAdresse(Adresse $adresse): static
+    {
+        $this->adresses->removeElement($adresse);
 
         return $this;
     }

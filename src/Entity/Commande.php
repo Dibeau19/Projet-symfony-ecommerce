@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\StatusCommande;
 use App\Repository\CommandeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,18 +21,19 @@ class Commande
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $reference = null;
+
     #[ORM\ManyToMany(targetEntity: Produit::class)]
     #[ORM\JoinTable(name: 'commande_produit')]
     private Collection $produits;
 
-    #[ORM\Column]
-    private ?float $prix = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $adresse = null;
-
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $date = null;
+
+    #[ORM\Column(enumType: StatusCommande::class)]
+    private ?StatusCommande $statusCommande = null;
 
     public function __construct()
     {
@@ -41,6 +43,11 @@ class Commande
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getReference(): ?string
+    {
+        return $this->reference;
     }
 
     public function getUser(): ?User
@@ -73,28 +80,6 @@ class Commande
         return $this;
     }
 
-    public function getPrix(): ?float
-    {
-        return $this->prix;
-    }
-
-    public function setPrix(float $prix): static
-    {
-        $this->prix = $prix;
-        return $this;
-    }
-
-    public function getAdresse(): ?string
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(string $adresse): static
-    {
-        $this->adresse = $adresse;
-        return $this;
-    }
-
     public function getDate(): ?\DateTime
     {
         return $this->date;
@@ -103,6 +88,17 @@ class Commande
     public function setDate(\DateTime $date): static
     {
         $this->date = $date;
+        return $this;
+    }
+
+    public function getStatusCommande(): ?StatusCommande
+    {
+        return $this->statusCommande;
+    }
+
+    public function setStatus(StatusCommande $statusCommande): static
+    {
+        $this->statusCommande = $statusCommande;
         return $this;
     }
 }

@@ -44,7 +44,6 @@ class Produit
     #[ORM\Column(enumType: Status::class)]
     private ?Status $status = null;
 
-    // ===== RELATION AVEC IMAGE =====
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Image::class, cascade: ['persist', 'remove'])]
     private Collection $images;
 
@@ -53,7 +52,6 @@ class Produit
         $this->images = new ArrayCollection();
     }
 
-    // ===== GETTERS / SETTERS EXISTANTS =====
     public function getId(): ?int
     {
         return $this->id;
