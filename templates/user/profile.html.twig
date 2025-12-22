@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}monProfil{% endtrans %}{% endblock %}
+
+{% block body %}
+<div class="container mt-5 mb-5">
+    <h1 class="mb-4 text-center">{% trans %}monProfil{% endtrans %}</h1>
+
+    <div class="row">
+        {# Colonne de gauche : Informations personnelles #}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-user-circle me-2"></i>{% trans %}informations{% endtrans %}</h5>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ user.prenom }} {{ user.nom }}</h5>
+                    <p class="card-text text-muted">{{ user.email }}</p>
+                    <p class="card-text">
+                        {% for role in user.roles %}
+                            <span class="badge bg-info text-dark">{{ role }}</span>
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        {# Colonne de droite : Adresses et Commandes #}
+        <div class="col-md-8">
+            
+            {# Section Adresses #}
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>{% trans %}mesAdresses{% endtrans %}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for adresse in user.adresses %}
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-light bg-light">
+                                    <div class="card-body">
+                                        <p class="mb-1"><strong>Adresse #{{ loop.index }}</strong></p>
+                                        <p class="mb-0">{{ adresse.rue }}</p>
+                                        <p class="mb-0">{{ adresse.codePostal }} {{ adresse.ville }}</p>
+                                        <p class="mb-0">{{ adresse.pays }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="col-12">
+                                <p class="text-muted text-center my-3">{% trans %}aucuneAdresse{% endtrans %}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            {# Section Commandes #}
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-shopping-bag me-2"></i>{% trans %}mesCommandes{% endtrans %}</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>{% trans %}reference{% endtrans %}</th>
+                                    <th>{% trans %}date{% endtrans %}</th>
+                                    <th>{% trans %}status{% endtrans %}</th>
+                                    <th>{% trans %}prixTotal{% endtrans %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for commande in commandes %}
+                                <tr>
+                                    <td>#{{ commande.reference }}</td>
+                                    <td>{{ commande.date ? commande.date|date('d/m/Y') : '' }}</td>
+                                    <td><span class="badge bg-secondary">{{ commande.statusCommande.value }}</span></td>
+                                    <td>
+                                        {% set total = 0 %}
+                                        {% for produit in commande.produits %}
+                                            {% set total = total + produit.prix %}
+                                        {% endfor %}
+                                        <strong>{{ total }} €</strong>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center py-4 text-muted">{% trans %}aucuneCommande{% endtrans %}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {# Bouton de déconnexion en bas #}
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <hr class="mb-4">
+            <a href="{{ path('app_logout') }}" class="btn btn-outline-danger btn-lg">
+                <i class="fas fa-sign-out-alt me-2"></i>{% trans %}deconnexion{% endtrans %}
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

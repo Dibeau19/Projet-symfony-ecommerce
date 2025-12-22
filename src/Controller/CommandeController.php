@@ -46,43 +46,63 @@ final class CommandeController extends AbstractController
             }
         }
 
+        $user = $this->getUser();
         $adresse = new Adresse();
         $form = $this->createForm(AdresseType::class, $adresse);
-
         $form->handleRequest($request);
 
+        // Cas 1 : Nouvelle adresse via formulaire
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->getUser();
             $adresse->addUser($user);
-
-            $commande = new Commande();
-            $commande->setUser($user);
-            $commande->setAdresseLivraison($adresse);
-            $commande->setStatus(StatusCommande::Preparation);
-            $commande->setDate(new \DateTime());
-
-            // Generating a reference manually since not an ID (simplification)
-            // Assuming reference is int based on entity definition
-            $commande->setReference(rand(100000, 999999));
-
-            foreach ($dataPanier as $item) {
-                $commande->addProduit($item['produit']);
-            }
-
             $em->persist($adresse);
-            $em->persist($commande);
-            $em->flush();
+            return $this->processOrder($user, $adresse, $dataPanier, $em, $session);
+        }
 
-            $session->remove('panier');
+        // Cas 2 : Adresse existante sélectionnée
+        if ($request->isMethod('POST') && $request->request->has('adresse_id')) {
+            $adresseId = $request->request->get('adresse_id');
+            $selectedAdresse = $em->getRepository(Adresse::class)->find($adresseId);
 
-            return $this->redirectToRoute('commande_succes');
+            if ($selectedAdresse && $selectedAdresse->getUsers()->contains($user)) {
+                return $this->processOrder($user, $selectedAdresse, $dataPanier, $em, $session);
+            }
         }
 
         return $this->render('commande/index.html.twig', [
             'form' => $form->createView(),
             'items' => $dataPanier,
-            'total' => $total
+            'total' => $total,
+            'user' => $user // Passer l'utilisateur pour afficher ses adresses
         ]);
+    }
+
+    private function processOrder($user, $adresse, $dataPanier, EntityManagerInterface $em, SessionInterface $session): Response
+    {
+        $commande = new Commande();
+        $commande->setUser($user);
+        $commande->setAdresseLivraison($adresse);
+        $commande->setStatus(StatusCommande::Preparation);
+        $commande->setDate(new \DateTime());
+        $commande->setReference(rand(100000, 999999));
+
+        foreach ($dataPanier as $item) {
+            /** @var \App\Entity\Produit $produit */
+            $produit = $item['produit'];
+            $commande->addProduit($produit);
+            
+            // Decrement stock
+            $newStock = $produit->getStock() - $item['quantite'];
+            $produit->setStock($newStock);
+            
+            $em->persist($produit);
+        }
+
+        $em->persist($commande);
+        $em->flush();
+
+        $session->remove('panier');
+
+        return $this->redirectToRoute('commande_succes');
     }
 
     #[Route('/succes', name: 'succes')]
@@ -90,6 +110,7 @@ final class CommandeController extends AbstractController
     {
         return $this->render('commande/succes.html.twig');
     }
+
     #[Route('/{id}', name: 'show', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function show(Commande $commande): Response
     {

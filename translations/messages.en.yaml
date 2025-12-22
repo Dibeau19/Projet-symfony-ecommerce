@@ -1,68 +1,68 @@
-pulls : Sweaters
-tshirts : T-shirts
-pantalons : Pants
-shorts : Shorts
+pulls: Sweaters
+tshirts: T-shirts
+pantalons: Pants
+shorts: Shorts
 connexion: Login
 deconnexion: Logout
 
-nosProduits : Our Products
-nosPulls : Our Sweaters
-nosTShirts : Our T-shirts
-nosPantalons : Our Pants
-nosShorts : Our Shorts
+nosProduits: Our Products
+nosPulls: Our Sweaters
+nosTShirts: Our T-shirts
+nosPantalons: Our Pants
+nosShorts: Our Shorts
 
-produit : Product
-ruptureStock : Out of Stock
-ajouterPanier : Add to Cart
-reference : Reference
-piece : Pieces
-pasImage : No image available
+produit: Product
+ruptureStock: Out of Stock
+ajouterPanier: Add to Cart
+reference: Reference
+piece: Pieces
+pasImage: No image available
 
-identifierVous : Please log in
-seConnecter : Log in
-creerCompte : Create an account
-motDePasse : Password
+identifierVous: Please log in
+seConnecter: Log in
+creerCompte: Create an account
+motDePasse: Password
 
-nom : Name
-prenom : First Name
-accepterConditions : Accept Terms and Conditions
+nom: Name
+prenom: First Name
+accepterConditions: Accept Terms and Conditions
 
-nomProduit : Name
-prix : Price
-marque : Brand
-description : Description
-stock : Stock
-status : Status
-taille : Size
-voir : View
-modifier : Edit
-pasEnregistrements : No records found
-nouveauProduit : New Product
+nomProduit: Name
+prix: Price
+marque: Brand
+description: Description
+stock: Stock
+status: Status
+taille: Size
+voir: View
+modifier: Edit
+pasEnregistrements: No records found
+nouveauProduit: New Product
 
-nouveauPantalon : New Pants
-nouveauPull : New Sweater
-nouveauTShirt : New T-shirt
-nouveauShort : New Shorts
+nouveauPantalon: New Pants
+nouveauPull: New Sweater
+nouveauTShirt: New T-shirt
+nouveauShort: New Shorts
 
-creerPantalon : Create Pants
-creerPull : Create Sweater
-creerTShirt : Create T-shirt
-creerShort : Create Shorts
+creerPantalon: Create Pants
+creerPull: Create Sweater
+creerTShirt: Create T-shirt
+creerShort: Create Shorts
 
-produits : Products
-auTotal : in total.
-panier  : Cart
-monPanier : My Cart
-viderPanier : Empty Cart
-panierVide : Your cart is empty.
-retourBoutique : Back to shop
-commander : Order
-valideCommande : Validate Order
-produitAjoute : Product added to your cart.
+produits: Products
+auTotal: in total.
+panier: Cart
+monPanier: My Cart
+viderPanier: Empty Cart
+panierVide: Your cart is empty.
+retourBoutique: Back to shop
+commander: Order
+valideCommande: Validate Order
+produitAjoute: Product added to your cart.
 
-supprimer : Delete
+supprimer: Delete
 
-retourListe : Back to list
+retourListe: Back to list
 
 utilisateurs: Users
 nosUtilisateurs: Our Users
@@ -91,6 +91,11 @@ date: Date
 client: Client
 aucuneCommande: No order found
 
+monProfil: My Account
+mesCommandes: My Orders
+mesAdresses: My Addresses
+aucuneAdresse: No address saved
+prixTotal: Total Price
 commande: Order
 informations: Information
 adresseLivraison: Delivery Address

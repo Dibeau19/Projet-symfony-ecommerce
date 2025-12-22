@@ -1,69 +1,69 @@
-pulls : Pulls
-tshirts : T-shirts
-pantalons : Pantalons
-shorts : Shorts
+pulls: Pulls
+tshirts: T-shirts
+pantalons: Pantalons
+shorts: Shorts
 connexion: Connexion
 deconnexion: Déconnexion
 
-nosProduits : Nos produits
-nosPulls : Nos pulls
-nosTShirts : Nos t-shirts
-nosPantalons : Nos pantalons
-nosShorts : Nos Shorts
+nosProduits: Nos produits
+nosPulls: Nos pulls
+nosTShirts: Nos t-shirts
+nosPantalons: Nos pantalons
+nosShorts: Nos Shorts
 
-produit : Produit
-ruptureStock : Rupture de stock
-ajouterPanier : Ajouter au panier
-reference : Référence
-piece : Pièces
-pasImage : Pas d'image disponible
+produit: Produit
+ruptureStock: Rupture de stock
+ajouterPanier: Ajouter au panier
+reference: Référence
+piece: Pièces
+pasImage: Pas d'image disponible
 
-identifierVous : Veuillez vous identifier
-seConnecter : Se connecter
-creerCompte : Créer un compte
-motDePasse : Mot de passe
+identifierVous: Veuillez vous identifier
+seConnecter: Se connecter
+creerCompte: Créer un compte
+motDePasse: Mot de passe
 
-nom : Nom
-prenom : Prénom
-accepterConditions : Accepter les conditions générales
+nom: Nom
+prenom: Prénom
+accepterConditions: Accepter les conditions générales
 
-nomProduit : Nom
-prix : Prix
-marque : Marque
-description : Description
-stock : Stock
-status : Statut
-taille : Taille
-voir : Voir
-modifier : Modifier
-pasEnregistrements : Aucun enregistrement trouvé
-nouveauProduit : Nouveau produit
+nomProduit: Nom
+prix: Prix
+marque: Marque
+description: Description
+stock: Stock
+status: Statut
+taille: Taille
+voir: Voir
+modifier: Modifier
+pasEnregistrements: Aucun enregistrement trouvé
+nouveauProduit: Nouveau produit
 
-nouveauPantalon : Nouveau pantalon
-nouveauPull : Nouveau pull
-nouveauTShirt : Nouveau t-shirt
-nouveauShort : Nouveau short
+nouveauPantalon: Nouveau pantalon
+nouveauPull: Nouveau pull
+nouveauTShirt: Nouveau t-shirt
+nouveauShort: Nouveau short
 
-creerPantalon : Créer un pantalon
-creerPull : Créer un pull
-creerTShirt : Créer un t-shirt
-creerShort : Créer un short
+creerPantalon: Créer un pantalon
+creerPull: Créer un pull
+creerTShirt: Créer un t-shirt
+creerShort: Créer un short
 
-produits : Produits
-auTotal : au total.
-panier  : Panier
-monPanier : Mon panier
-viderPanier : Vider le panier
-panierVide : Votre panier est vide.
-retourBoutique : Retour à la boutique
-commander : Commander
-valideCommande : Valider la commande
-produitAjoute : Produit ajouté au panier avec succès !
+produits: Produits
+auTotal: au total.
+panier: Panier
+monPanier: Mon panier
+viderPanier: Vider le panier
+panierVide: Votre panier est vide.
+retourBoutique: Retour à la boutique
+commander: Commander
+valideCommande: Valider la commande
+produitAjoute: Produit ajouté au panier avec succès !
 
 supprimer: Supprimer
 
-retourListe : Retour à la liste
-pasAutorise : Vous n'êtes pas autorisé à accéder à cette page.
+retourListe: Retour à la liste
+pasAutorise: Vous n'êtes pas autorisé à accéder à cette page.
 
 utilisateurs: Utilisateurs
 nosUtilisateurs: Nos utilisateurs
@@ -91,7 +91,13 @@ date: Date
 client: Client
 aucuneCommande: Aucune commande trouvée
 gererCommandes: Gérer les commandes
+adresseLivraison: Adresse de livraison
 
 commande: Commande
 informations: Informations
-adresseLivraison: Adresse de livraison
+
+monProfil: Mon Compte
+mesCommandes: Mes commandes
+mesAdresses: Mes adresses
+aucuneAdresse: Aucune adresse enregistrée
+prixTotal: Prix Total

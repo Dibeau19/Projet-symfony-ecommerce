@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-{% if is_granted('ROLE_ADMIN') %}
     <meta charset="UTF-8">
     <title>{% block title %}Mon E-commerce{% endblock %}</title>
 
@@ -13,7 +12,6 @@
     {% block javascripts %}
         {{ importmap('app') }}
     {% endblock %}
-{% endif %}
 </head>
 <body>
 
