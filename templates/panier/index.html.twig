@@ -1,19 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon Panier{% endblock %}
+{% block title %}{% trans %} monPanier {% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Mon Panier</h1>
+    <h1>{% trans %} monPanier {% endtrans %}</h1>
 
     {% if items | length > 0 %}
         <table class="table">
             <thead>
                 <tr>
-                    <th>Produit</th>
-                    <th>Prix</th>
-                    <th>Quantité</th>
-                    <th>Total</th>
-                    <th>Actions</th>
+                    <th>{% trans %} produit {% endtrans %}</th>
+                    <th>{% trans %} prix {% endtrans %}</th>
+                    <th>{% trans %} quantite {% endtrans %}</th>
+                    <th>{% trans %} total {% endtrans %}</th>
+                    <th>{% trans %} actions {% endtrans %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,7 +29,7 @@
                         
                         <td>
                             <a href="{{ path('panier_remove', {id: item.produit.id}) }}" class="btn btn-danger btn-sm">
-                                Supprimer
+                                {% trans %} supprimer {% endtrans %}
                             </a>
                         </td>
                     </tr>
@@ -44,12 +44,12 @@
         </table>
         
         <div class="d-flex justify-content-end">
-            <a href="#" class="btn btn-success btn-lg">Valider la commande</a>
+            <a href="#" class="btn btn-success btn-lg">{% trans %} valideCommande {% endtrans %}</a>
         </div>
 
     {% else %}
         <div class="alert alert-info">
-            Votre panier est vide. <a href="/">Retourner à la boutique</a>.
+            {% trans %} panierVide {% endtrans %} <a href="/">{% trans %} retourBoutique {% endtrans %}</a>.
         </div>
     {% endif %}
 {% endblock %}

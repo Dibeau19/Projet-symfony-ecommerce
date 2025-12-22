@@ -51,6 +51,16 @@ creerShort : Create Shorts
 
 produits : Products
 auTotal : in total.
+panier  : Cart
+monPanier : My Cart
+viderPanier : Empty Cart
+panierVide : Your cart is empty.
+retourBoutique : Back to shop
+commander : Order
+valideCommande : Validate Order
+produitAjoute : Product added to your cart.
+
+supprimer : Delete
 
 retourListe : Back to list
 pasAutorise : You are not authorized to access this page.

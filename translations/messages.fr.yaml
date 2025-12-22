@@ -51,6 +51,16 @@ creerShort : Créer un short
 
 produits : Produits
 auTotal : au total.
+panier  : Panier
+monPanier : Mon panier
+viderPanier : Vider le panier
+panierVide : Votre panier est vide.
+retourBoutique : Retour à la boutique
+commander : Commander
+valideCommande : Valider la commande
+produitAjoute : Produit ajouté au panier avec succès !
+
+supprimer: Supprimer
 
 retourListe : Retour à la liste
 pasAutorise : Vous n'êtes pas autorisé à accéder à cette page.
