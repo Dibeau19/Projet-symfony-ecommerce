@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}commande{% endtrans %}{% endblock %}
+
+{% block body %}
+{% if is_granted('ROLE_ADMIN') %}
+    <h1>{% trans %}commande{% endtrans %} #{{ commande.reference }}</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>{% trans %}informations{% endtrans %}</strong>
+                </div>
+                <div class="card-body">
+                    <p><strong>{% trans %}date{% endtrans %}:</strong> {{ commande.date ? commande.date|date('Y-m-d H:i') : '' }}</p>
+                    <p><strong>{% trans %}status{% endtrans %}:</strong> {{ commande.statusCommande.value }}</p>
+                    <p><strong>{% trans %}client{% endtrans %}:</strong> {{ commande.user.email }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>{% trans %}adresseLivraison{% endtrans %}</strong>
+                </div>
+                <div class="card-body">
+                    {{ commande.adresseLivraison }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>{% trans %}produits{% endtrans %}</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{% trans %}nomProduit{% endtrans %}</th>
+                <th>{% trans %}prix{% endtrans %}</th>
+                <th>{% trans %}marque{% endtrans %}</th>
+                <th>{% trans %}taille{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for produit in commande.produits %}
+            <tr>
+                <td>{{ produit.nom }}</td>
+                <td>{{ produit.prix }} €</td>
+                <td>{{ produit.marque }}</td>
+                <td>{{ produit.taille }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">{% trans %}pasEnregistrements{% endtrans %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('commande_admin') }}">{% trans %}retourListe{% endtrans %}</a>
+
+{% else %}
+    <h1>{% trans %}pasAutorise{% endtrans %}</h1>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Valider ma commande{% endblock %}
+
+{% block body %}
+    <h1>Valider ma commande</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Récapitulatif</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Prix</th>
+                        <th>Quantité</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.produit.nom }}</td>
+                            <td>{{ item.produit.prix }} €</td>
+                            <td>{{ item.quantite }}</td>
+                            <td>{{ item.produit.prix * item.quantite }} €</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-end"><strong>Total :</strong></td>
+                        <td><strong>{{ total }} €</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h3>Adresse de livraison</h3>
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-success mt-3">Confirmer la commande</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

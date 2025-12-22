@@ -100,4 +100,9 @@ class Adresse
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->rue . ' ' . $this->code_postal . ' ' . $this->ville;
+    }
 }

@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}utilisateurs{% endtrans %} index{% endblock %}
+
+{% block body %}
+
+{% if is_granted('ROLE_ADMIN') %}
+
+<div class="container mt-3"> 
+    <h1 class='text-center'>{% trans %}utilisateurs{% endtrans %} index</h1>
+
+    <div class="alert alert-info text-center py-2">
+            <strong>{{ users.getTotalItemCount }}</strong> {% trans %}utilisateurs{% endtrans %} {% trans %}auTotal{% endtrans %}
+        </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>{% trans %}nom{% endtrans %}</th>
+                <th>{% trans %}prenom{% endtrans %}</th>
+                <th>{% trans %}email{% endtrans %}</th>
+                <th>{% trans %}roles{% endtrans %}</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% for role in user.roles %}
+                        <span class="badge bg-secondary">{{ role }}</span>
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn btn-sm btn-info">{% trans %}voir{% endtrans %}</a>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-sm btn-warning">{% trans %}modifier{% endtrans %}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">{% trans %}aucunUtilisateur{% endtrans %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center my-4">
+        {{ knp_pagination_render(users) }}
+    </div>
+
+    <a href="{{ path('app_user_new') }}" class='btn btn-outline-primary'>{% trans %}nouveauUtilisateur{% endtrans %}</a>
+</div>
+{% endif %}
+{% endblock %}

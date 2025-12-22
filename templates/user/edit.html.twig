@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}{% trans %}modifierUtilisateur{% endtrans %}{% endblock %}
 
 {% block body %}
 {% if is_granted('ROLE_ADMIN') %}
-    <h1>Edit User</h1>
+    <h1>{% trans %}modifierUtilisateur{% endtrans %}</h1>
 
     {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+    <a href="{{ path('app_user_admin') }}">{% trans %}retourListe{% endtrans %}</a>
 
     {{ include('user/_delete_form.html.twig') }}
 {% else %}
-    <h1>Vous n'avez pas la permission d'accéder à cette page.</h1>
+    <h1>{% trans %}pasAutorise{% endtrans %}</h1>
 {% endif %}
 {% endblock %}

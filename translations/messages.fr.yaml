@@ -64,3 +64,34 @@ supprimer: Supprimer
 
 retourListe : Retour à la liste
 pasAutorise : Vous n'êtes pas autorisé à accéder à cette page.
+
+utilisateurs: Utilisateurs
+nosUtilisateurs: Nos utilisateurs
+nouveauUtilisateur: Nouvel utilisateur
+creerUtilisateur: Créer un utilisateur
+gererUtilisateurs: Gérer les Utilisateurs
+email: Email
+roles: Rôles
+adresse: Adresse
+adresses: Adresses
+aucunUtilisateur: Aucun utilisateur trouvé
+modifierUtilisateur: Modifier l'utilisateur
+supprimerUtilisateur: Supprimer l'utilisateur
+enregistrer: Enregistrer
+mettreAJour: Mettre à jour
+etesVousSur: Êtes-vous sûr de vouloir supprimer cet élément ?
+pageGestionProduits: Page gestion des produits
+gererPulls: Gérer les Pulls
+gererTShirts: Gérer les T-Shirts
+gererPantalons: Gérer les Pantalons
+gererShorts: Gérer les Shorts
+
+commandes: Commandes
+date: Date
+client: Client
+aucuneCommande: Aucune commande trouvée
+gererCommandes: Gérer les commandes
+
+commande: Commande
+informations: Informations
+adresseLivraison: Adresse de livraison

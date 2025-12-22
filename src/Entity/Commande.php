@@ -21,7 +21,6 @@ class Commande
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $reference = null;
 
@@ -34,6 +33,10 @@ class Commande
 
     #[ORM\Column(enumType: StatusCommande::class)]
     private ?StatusCommande $statusCommande = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Adresse $adresseLivraison = null;
 
     public function __construct()
     {
@@ -48,6 +51,13 @@ class Commande
     public function getReference(): ?string
     {
         return $this->reference;
+    }
+
+    public function setReference(int $reference): static
+    {
+        $this->reference = $reference;
+
+        return $this;
     }
 
     public function getUser(): ?User
@@ -99,6 +109,18 @@ class Commande
     public function setStatus(StatusCommande $statusCommande): static
     {
         $this->statusCommande = $statusCommande;
+        return $this;
+    }
+
+    public function getAdresseLivraison(): ?Adresse
+    {
+        return $this->adresseLivraison;
+    }
+
+    public function setAdresseLivraison(?Adresse $adresseLivraison): static
+    {
+        $this->adresseLivraison = $adresseLivraison;
+
         return $this;
     }
 }

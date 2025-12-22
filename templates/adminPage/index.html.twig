@@ -1,19 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page gestion des produits{% endblock %}
+{% block title %}{% trans %}pageGestionProduits{% endtrans %}{% endblock %}
 
 {% block body %}
 
-<h1>Page gestion des produits</h1>
+<h1>{% trans %}pageGestionProduits{% endtrans %}</h1>
 
 {% if is_granted('ROLE_ADMIN') %}
     <br>
-    <a href="{{ path('app_pull_admin') }}" class='btn btn-outline-primary'>Gérer les Pulls</a>
-    <a href="{{ path('app_t_shirt_admin') }}" class='btn btn-outline-primary'>Gérer les T-Shirts</a>
-    <a href="{{ path('app_pantalon_admin') }}" class='btn btn-outline-primary'>Gérer les Pantalons</a>
-    <a href="{{ path('app_short_admin') }}" class='btn btn-outline-primary'>Gérer les Shorts</a>
+    <a href="{{ path('app_pull_admin') }}" class='btn btn-outline-primary'>{% trans %}gererPulls{% endtrans %}</a>
+    <a href="{{ path('app_t_shirt_admin') }}" class='btn btn-outline-primary'>{% trans %}gererTShirts{% endtrans %}</a>
+    <a href="{{ path('app_pantalon_admin') }}" class='btn btn-outline-primary'>{% trans %}gererPantalons{% endtrans %}</a>
+    <a href="{{ path('app_short_admin') }}" class='btn btn-outline-primary'>{% trans %}gererShorts{% endtrans %}</a>
+    <a href="{{ path('app_user_admin') }}" class='btn btn-outline-primary'>{% trans %}gererUtilisateurs{% endtrans %}</a>
+    <a href="{{ path('commande_admin') }}" class='btn btn-outline-primary'>{% trans %}gererCommandes{% endtrans %}</a>
 {% else %}
-    <h2>Vous n'avez pas la permission d'accéder à cette page.</h2>
+    <h2>{% trans %}pasAutorise{% endtrans %}</h2>
 {% endif %}
 
 {% endblock %}

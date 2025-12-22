@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+{% if is_granted('ROLE_ADMIN') %}
     <meta charset="UTF-8">
     <title>{% block title %}Mon E-commerce{% endblock %}</title>
 
     {% block stylesheets %}
         <link href="{{ asset('bootstrap.min.css') }}" rel="stylesheet">
-        {# J'ai déplacé ton css custom ici pour qu'il soit bien groupé #}
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     {% endblock %}
 
-    {# 👇 AJOUTE CE BLOC OBLIGATOIREMENT 👇 #}
     {% block javascripts %}
         {{ importmap('app') }}
     {% endblock %}
-    {# 👆 C'est cette ligne qui lance tout le système JS #}
-
+{% endif %}
 </head>
 <body>
 

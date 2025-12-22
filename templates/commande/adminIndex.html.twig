@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}commandes{% endtrans %} index{% endblock %}
+
+{% block body %}
+
+{% if is_granted('ROLE_ADMIN') %}
+
+<div class="container mt-3"> 
+    <h1 class='text-center'>{% trans %}commandes{% endtrans %} index</h1>
+
+    <div class="alert alert-info text-center py-2">
+            <strong>{{ commandes.getTotalItemCount }}</strong> {% trans %}commandes{% endtrans %} {% trans %}auTotal{% endtrans %}
+        </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>{% trans %}reference{% endtrans %}</th>
+                <th>{% trans %}date{% endtrans %}</th>
+                <th>{% trans %}status{% endtrans %}</th>
+                <th>{% trans %}client{% endtrans %}</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.id }}</td>
+                <td>{{ commande.reference }}</td>
+                <td>{{ commande.date ? commande.date|date('Y-m-d') : '' }}</td>
+                <td>{{ commande.statusCommande.value }}</td>
+                <td>{{ commande.user.email }}</td>
+                <td>
+                    <a href="{{ path('commande_show', {'id': commande.id}) }}" class="btn btn-sm btn-info">{% trans %}voir{% endtrans %}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">{% trans %}aucuneCommande{% endtrans %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center my-4">
+        {{ knp_pagination_render(commandes) }}
+    </div>
+
+</div>
+{% endif %}
+{% endblock %}
